@@ -1,0 +1,5 @@
+#!/bin/bash
+
+export APP_TO_RUN=`ls /usr/bin | dmenu -p "Run executable" -i | awk '{print $1}'`
+
+$APP_TO_RUN

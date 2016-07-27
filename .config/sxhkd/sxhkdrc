@@ -1,0 +1,167 @@
+#                                                                                  #
+# ------------------------------- BSPWM management ------------------------------- #
+#                                                                                  #
+
+# Quit BSPWM
+super + Escape
+	bspc quit
+
+# Reload sxhkd files
+alt + shift + Escape
+	pkill -USR1 -x sxhkd;\
+	notify-send "Keybindings reloaded"
+
+# Toggle panel
+super + q
+	{pkill tint2; bspc config top_padding 0 ,\
+	bspc config top_padding 30; tint2 };\
+	notify-send "Panels toggled"
+
+# Lock screen
+super + l
+	lock
+
+#                                                                                  #
+# ------------------------------------ Windows ----------------------------------- #
+#                                                                                  #
+
+# Close focused window
+super + x
+	bspc node -{c};\
+	notify-send "Window closed"
+
+# Kill focused window
+super + shift + x
+	bspc node -{c,k}\
+	notify-send "Window killed"
+
+# Fullscreen focused window
+super + m
+	bspc desktop -l next
+	# bspc node -t {fullscreen}
+
+# Switch window focus
+alt + Tab
+	bspc node -f next;\
+	notify-send "Window focus changed"
+
+
+
+#                                                                                  #
+# ----------------------------------- Desktops ----------------------------------- #
+#                                                                                  #
+
+# Focus the next / previous desktop
+ctrl + alt + {Left,Right}
+	bspc desktop -f {prev,next}
+
+# Send window to next / previous desktop
+shift + alt + {Left,Right}
+	export DIRECTION={prev,next};\
+	bspc node -d $DIRECTION;\
+	bspc desktop -f $DIRECTION
+
+# Enable multi desktops
+super + F1
+	bspc monitor DP1 -d I II III IV V;\
+	bspc monitor eDP1 -d VI VII VIII IX X;\
+	notify-send "Desktops configured."
+
+# Focus or send window to the given desktop
+super + {_,shift + }{1-9,0}
+	bspc {desktop -f,node -d} '^{1-9,10}'
+
+
+
+#                                                                                  #
+# ------------------------------------ Mouse ------------------------------------- #
+#                                                                                  #
+
+# Resize pressed window
+shift + button3
+	bspc pointer -g {focus};\
+	bspc pointer -g {resize_side,resize_corner}
+shift + !button3
+	bspc pointer -t %i %i
+
+# Move pressed window
+shift + button1
+	bspc pointer -g {focus};\
+	bspc pointer -g {move}
+shift + !button1
+	bspc pointer -t %i %i
+
+# Focus on pressed window
+alt + button1
+	bspc pointer -g {focus};\
+	notify-send "Window focus changed"
+alt + !button1
+	bspc pointer -t %i %i
+
+# Close window under pointer
+alt + button3
+	bspc pointer -g {focus}; bspc node -{c};\
+	notify-send "Window closed"
+alt + !button3
+	bspc pointer -t %i %i;
+
+
+
+#                                                                                  #
+# ---------------------------------- Brightness ---------------------------------- #
+#                                                                                  #
+
+# Screen backlight settings
+super + F5
+	xbacklight -10
+super + F6
+	xbacklight +10
+
+# Screen brightness settings
+super + F7
+	brightness_set -0.1
+super + F8
+	brightness_set +0.1
+
+super + F9
+    echo "1.0" > /tmp/backlight; xrandr --output eDP1 --brightness 1; xbacklight =100
+
+#                                                                                  #
+# ------------------------------------ Volume ------------------------------------ #
+#                                                                                  #
+
+super + F11
+	amixer set Master 5%-
+
+super + F12
+	amixer set Master 5%+
+
+
+
+#                                                                                  #
+# --------------------------------- Applications --------------------------------- #
+#                                                                                  #
+
+# Run applications
+alt + F1
+	dmenu_runusrbin
+
+alt + F2
+	dmenu_runapp
+	# gmrun
+
+super + t
+	terminator
+
+super + w
+	chromium
+
+super + f
+	thunar
+
+super + s
+	gedit "/home/jezor/.config/sxhkd/sxhkdrc"
+
+# Make a screenshot
+Print
+	print_screen

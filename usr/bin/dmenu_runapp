@@ -1,0 +1,6 @@
+#!/bin/bash
+
+export APP_TO_RUN=`pacman -Q | dmenu -p "Run application" -i | awk '{print $1}'`
+
+$APP_TO_RUN
+

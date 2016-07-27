@@ -1,0 +1,8 @@
+#!/bin/bash
+
+export S_PATH=`date +"%d_%m_%y__%H_%M_%S__%N.png"`
+export S_PATH="~/Pictures/Screenshots/"$S_PATH
+
+scrot -e 'mv $f '$S_PATH
+
+notify-send "Screenshot has been saved as $S_PATH"

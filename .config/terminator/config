@@ -1,0 +1,23 @@
+[global_config]
+  handle_size = 4
+  inactive_color_offset = 0.69
+  title_font = Monospace 14
+  title_use_system_font = False
+[keybindings]
+[layouts]
+  [[default]]
+    [[[child1]]]
+      parent = window0
+      type = Terminal
+    [[[window0]]]
+      parent = ""
+      type = Window
+[plugins]
+[profiles]
+  [[default]]
+    background_darkness = 0.0
+    background_image = None
+    font = Monospace 14
+    scrollbar_position = hidden
+    show_titlebar = False
+    use_system_font = False
