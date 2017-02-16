@@ -21,16 +21,16 @@ mouse_warping none
 # Leave fullscreen mode on popup open
 popup_during_fullscreen leave_fullscreen
 
-# reload the configuration file
-bindsym $mod+Shift+c reload
+# Reload the configuration file
+ bindsym $mod+Shift+c reload
 
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+# Restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 
 # Open this configuration file
 bindsym $mod+s exec "gedit ~/.config/i3/config"
 
-# exit i3 (logs you out of your X session)
+# Exit i3 (logs you out of your X session)
 bindsym $mod+Escape exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 #                                                                                  #
@@ -51,7 +51,7 @@ client.background       #ffffff
 #                                                                                  #
 
 # Toggle i3bar
-bindsym $mod+b bar mode toggle
+bindsym $mod+q bar mode toggle
 
 # switch to workspace
 bindsym $mod+1 workspace 1
@@ -101,6 +101,9 @@ bindsym $mod+Right move right
 
 # toggle tiling / floating, if switching to tiling set border to 2px
 bindsym $mod+n floating toggle border pixel 2
+
+# Change container layout (stacked, tabbed, toggle split)
+bindsym $mod+b layout toggle all
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -163,7 +166,6 @@ bindsym $mod+w exec chromium
 # Run file manager
 bindsym $mod+f exec thunar
 
-
 # print screen
 bindsym $mod+o exec print_screen
 
@@ -174,13 +176,14 @@ bindsym $mod+d exec dmenu_runapp
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-    status_command i3pystatus
+    status_command py3status -c ".config/i3/i3status config"
+    position top
     colors {
         background #002100
         statusline #aaffaa
-        separator  #7FFF7F
+        separator  #ee9922
 
-#       <colorclass>       <border> <background> <text>
+      # <colorclass>       <border> <background> <text>
         focused_workspace  #4c7899  #7FFF7F      #000000
         active_workspace   #333333  #5f676a      #ffffff
         inactive_workspace #333333  #222222      #888888

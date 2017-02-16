@@ -13,14 +13,14 @@
         set __fish_git_prompt_char_upstream_behind '↓'
 	
 # Prompt color definitions
-	set COLOR_USERNAME "E91"
+	set COLOR_USERNAME "9E1"
 	set COLOR_MONKEY "444"
-	set COLOR_HOSTNAME "FA2"
-	set COLOR_PATH "D80"
-	set COLOR_ARROW_1 "E91"
-	set COLOR_ARROW_2 "D80"
-	set COLOR_ARROW_3 "840"
-	set COLOR_GIT "E91"
+	set COLOR_HOSTNAME "AF2"
+	set COLOR_PATH "8D0"
+	set COLOR_ARROW_1 "9E1"
+	set COLOR_ARROW_2 "8D0"
+	set COLOR_ARROW_3 "480"
+	set COLOR_GIT "9E1"
 	
 # Prompt character
 	set PROMPT_CHAR "❯"
