@@ -11,41 +11,41 @@
         set __fish_git_prompt_char_stashstate '↩'
         set __fish_git_prompt_char_upstream_ahead '↑'
         set __fish_git_prompt_char_upstream_behind '↓'
-	
+
 # Prompt color definitions
-	set COLOR_USERNAME "9E1"
+	set COLOR_USERNAME "A61"
 	set COLOR_MONKEY "444"
 	set COLOR_HOSTNAME "AF2"
-	set COLOR_PATH "8D0"
-	set COLOR_ARROW_1 "9E1"
-	set COLOR_ARROW_2 "8D0"
-	set COLOR_ARROW_3 "480"
-	set COLOR_GIT "9E1"
-	
+	set COLOR_PATH "F72"
+	set COLOR_ARROW_1 "F82"
+	set COLOR_ARROW_2 "D61"
+	set COLOR_ARROW_3 "B40"
+	set COLOR_GIT "F82"
+
 # Prompt character
 	set PROMPT_CHAR "❯"
 
 function fish_prompt
 	# Username
-	
+
 	printf (set_color -o $COLOR_USERNAME)(whoami | head -c 1)' '
-	
-	# Current path	
-	
+
+	# Current path
+
 	echo -n (set_color normal)(set_color $COLOR_PATH)(prompt_pwd)
-	
+
 	# GIT status
-	
+
 	set last_status $status
 	set_color -o $COLOR_GIT
-	if __fish_git_prompt	
+	if __fish_git_prompt
 		printf '\b'
 	else
 		printf ' '
 	end
-	
+
 	# Fancy arrows
-	
+
 	echo -n (set_color -o $COLOR_ARROW_1)"$PROMPT_CHAR"
 	echo -n (set_color -o $COLOR_ARROW_2)"$PROMPT_CHAR"
 	echo -n (set_color -o $COLOR_ARROW_3)"$PROMPT_CHAR "
