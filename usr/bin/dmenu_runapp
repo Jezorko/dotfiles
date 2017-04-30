@@ -1,6 +1,16 @@
 #!/bin/bash
 
-export APP_TO_RUN=`pacman -Q | dmenu -p "Run application" -i | awk '{print $1}'`
+export APP_TO_RUN=`cat\
+	<(pacman -Q | awk '{print $1}')\
+	<(find /usr/bin -printf "%f\n")\
+	| sort | uniq | dmenu -l 10 \
+          -nb "$GENERATED_PALETTE_1" \
+          -nf "$GENERATED_PALETTE_5" \
+          -sf "$GENERATED_PALETTE_10" \
+          -sb "$GENERATED_PALETTE_1" \
+        -p "Run application" -i` > /tmp/test
 
+if [ "$APP_TO_RUN" != "" ]; then
+	notify-send -u low "Running app" "$APP_TO_RUN"
+fi
 $APP_TO_RUN
-

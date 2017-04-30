@@ -4,7 +4,7 @@ width = 100%
 height = 25
 
 background = #00000000
-foreground = #EE9922
+foreground = ${module/colors.generated7}
 
 line-color = #00000000
 line-size = 3
@@ -21,6 +21,18 @@ font-3 = FontAwesome:size=10;2
 modules-left = i3
 modules-center = date
 modules-right = volume backlight wireless-network wired-network
+
+[module/colors]
+generated1 = ${xrdb:generated1:#000000}
+generated2 = ${xrdb:generated2:#111111}
+generated3 = ${xrdb:generated3:#222222}
+generated4 = ${xrdb:generated4:#333333}
+generated5 = ${xrdb:generated5:#444444}
+generated6 = ${xrdb:generated6:#777777}
+generated7 = ${xrdb:generated7:#999999}
+generated8 = ${xrdb:generated8:#bbbbbb}
+generated9 = ${xrdb:generated9:#dddddd}
+generated10 = ${xrdb:generated10:#ffffff}
 
 [module/i3]
 type = internal/i3
@@ -48,16 +60,15 @@ label-mode-padding = 2
 label-mode-background = #e60053
 
 label-focused = %index%
-label-focused-foreground = #fba922
-#label-focused-background = #3f3f3f
-label-focused-underline = #d07000
+label-focused-foreground = ${module/colors.generated7}
+label-focused-underline = ${module/colors.generated6}
 label-focused-padding = 4
 
 label-unfocused = %index%
 label-unfocused-padding = 4
 
 label-visible = %index%
-label-visible-underline = #555555
+label-visible-underline = #444444
 label-visible-padding = 4
 
 label-urgent = %index%
@@ -79,29 +90,17 @@ bar-indicator-font = 3
 bar-indicator-foreground = #ff
 bar-fill = ─
 bar-fill-font = 3
-bar-fill-foreground = #c9665e
+bar-fill-foreground = ${module/colors.generated6}
 bar-empty = ─
 bar-empty-font = 3
 bar-empty-foreground = #44
 
 [module/date]
 type = internal/date
-date = %%{F#99}%Y-%m-%d%%{F-}  %%{F#fba922}%H:%M%%{F-}
-date-alt = %%{F#99}%A, %d %B %Y  %%{F#fba922}%H:%M%%{F#fba922}:%S
+date = %Y-%m-%d %H:%M
+date-alt = %A, %d %B %Y  %H:%M:%S
 
-bar-used-width = 10
-bar-used-foreground-0 = #aaff77
-bar-used-foreground-1 = #aaff77
-bar-used-foreground-2 = #fba922
-bar-used-foreground-3 = #ff5555
-bar-used-indicator = |
-bar-used-indicator-font = 6
-bar-used-indicator-foreground = #ff
-bar-used-fill = ─
-bar-used-fill-font = 6
-bar-used-empty = ─
-bar-used-empty-font = 6
-bar-used-empty-foreground = #444444
+format-foreground = ${module/colors.generated8}
 
 [module/wireless-network]
 type = internal/network

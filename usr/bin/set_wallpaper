@@ -1,0 +1,44 @@
+#!/usr/bin/fish
+
+# Dependencies list:
+#  * colors-git - https://aur.archlinux.org/packages/colors-git/ and http://blog.z3bra.org/2015/06/vomiting-colors.html
+#  * nitrogen - https://aur.archlinux.org/packages/nitrogen-git/
+
+if not count $argv > /dev/null
+    echo "Usage set_wallpaper [IMG_FILE.png]"
+    exit 1
+end
+
+# First argument must always be an image file
+set image_file $argv[1]
+
+# Colors amount to generate
+set colors_amount 10
+
+# Generates color palette and saves it as array
+set generated_palette (colors -en $colors_amount $image_file | sed -e 's/ /a\x1eb/g')
+
+# Sets image file as a wallpaper
+nitrogen --set-zoom-fill $image_file
+
+# Creates temporary Xresources file
+set xres_gen /tmp/Xresources_generated
+echo "*background: #ffffff" > $xres_gen
+echo "*foreground: #bbbbbb" >> $xres_gen
+
+for x in (seq $colors_amount)
+    # Unsets environment variables
+    set -e "GENERATED_PALETTE_$x"
+
+    # Saves generated palette to environment variables
+    set -Ux "GENERATED_PALETTE_$x" $generated_palette[$x]
+
+    # Adds entries to temporary Xresources file
+    echo "*generated$x: "$generated_palette[$x] >> $xres_gen
+end
+
+# Loads generated Xresources file
+xrdb $xres_gen
+
+# Restarts i3
+i3-msg restart

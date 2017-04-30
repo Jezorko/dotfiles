@@ -25,7 +25,7 @@ mouse_warping none
 popup_during_fullscreen leave_fullscreen
 
 # Reload the configuration file
- bindsym $mod+Shift+c reload
+bindsym $mod+Shift+c reload
 
 # Restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
@@ -43,12 +43,23 @@ bindsym $mod+Escape exec "i3-nagbar -t warning -m 'You pressed the exit shortcut
 # ------------------------------------ Colors ------------------------------------ #
 #                                                                                  #
 
-# class                 border  backgr. text    indicator child_border
-client.focused          #cd7e10 #285577 #ffffff #cd7e10   #cd7e10
-client.focused_inactive #5f3d0d #5f676a #ffffff #cd7e10   #5f3d0d
-client.unfocused        #5f3d0d #222222 #888888 #cd7e10   #5f3d0d
-client.urgent           #2f343a #900000 #ffffff #cd7e10   #900000
-client.placeholder      #000000 #0c0c0c #ffffff #cd7e10   #0c0c0c
+set_from_resource $GENERATED_PALETTE_1 i3wm.generated1
+set_from_resource $GENERATED_PALETTE_2 i3wm.generated2
+set_from_resource $GENERATED_PALETTE_3 i3wm.generated3
+set_from_resource $GENERATED_PALETTE_4 i3wm.generated4
+set_from_resource $GENERATED_PALETTE_5 i3wm.generated5
+set_from_resource $GENERATED_PALETTE_6 i3wm.generated6
+set_from_resource $GENERATED_PALETTE_7 i3wm.generated7
+set_from_resource $GENERATED_PALETTE_8 i3wm.generated8
+set_from_resource $GENERATED_PALETTE_9 i3wm.generated9
+set_from_resource $GENERATED_PALETTE_10 i3wm.generated10
+
+# class                 border               backgr.              text                 indicator            child_border
+client.focused          $GENERATED_PALETTE_9 $GENERATED_PALETTE_5 $GENERATED_PALETTE_9 $GENERATED_PALETTE_9 $GENERATED_PALETTE_9
+client.focused_inactive $GENERATED_PALETTE_5 $GENERATED_PALETTE_5 $GENERATED_PALETTE_5 $GENERATED_PALETTE_5 $GENERATED_PALETTE_5
+client.unfocused        $GENERATED_PALETTE_2 $GENERATED_PALETTE_2 $GENERATED_PALETTE_2 $GENERATED_PALETTE_2 $GENERATED_PALETTE_2
+client.urgent           #900000              #900000              #000000              #900000              #900000
+client.placeholder      $GENERATED_PALETTE_1 $GENERATED_PALETTE_1 $GENERATED_PALETTE_5 $GENERATED_PALETTE_1 $GENERATED_PALETTE_1
 
 client.background       #ffffff
 
@@ -177,8 +188,7 @@ bindsym $mod+F12 exec "amixer set Master 5%+"
 #                                                                                  #
 
 # Run terminal
-#bindsym $mod+t exec i3-sensible-terminal
-bindsym $mod+t exec roxterm
+bindsym $mod+t exec lxterminal
 
 # Run browser
 bindsym $mod+w exec chromium
@@ -192,10 +202,5 @@ bindsym $mod+o exec print_screen
 # lock screen
 bindsym $mod+l exec lock
 
-# VPNs
-bindsym $mod+c exec vpn_upaid
-bindsym $mod+v exec vpn_fenige
-
 # run dmenu
-bindsym $mod+d exec dmenu_runapp
-#bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+d exec "fish -c dmenu_runapp"
