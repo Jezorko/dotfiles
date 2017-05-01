@@ -19,6 +19,7 @@ Click on the screenshot below to see the gif.
 [![screenshot2](http://i.imgur.com/6TaMLUmb.jpg)](http://i.imgur.com/6TaMLUm.png)
 [![screenshot3](http://i.imgur.com/ph3EKOsb.jpg)](http://i.imgur.com/ph3EKOs.png)
 [![screenshot4](http://i.imgur.com/43KdsFIb.jpg)](http://i.imgur.com/43KdsFI.png)
+[![screenshot5](http://i.imgur.com/uZ8BbU2b.jpg)](http://i.imgur.com/uZ8BbU2.png)
 
 ## Dependencies
 
