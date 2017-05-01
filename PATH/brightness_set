@@ -1,6 +1,0 @@
-#!/bin/bash
-
-export BRIGHTNESS=`cat /tmp/backlight`
-export BRIGHTNESS=`echo "scale = 1; $BRIGHTNESS $1" | bc`
-xrandr --output eDP1 --brightness $BRIGHTNESS
-echo $BRIGHTNESS > /tmp/backlight
