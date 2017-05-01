@@ -2,7 +2,7 @@
 
 # Dependencies list:
 #  * colors-git - https://aur.archlinux.org/packages/colors-git/ and http://blog.z3bra.org/2015/06/vomiting-colors.html
-#  * feh - https://wiki.archlinux.org/index.php/feh
+#  * nitrogen - https://wiki.archlinux.org/index.php/nitrogen
 
 if not count $argv > /dev/null
     echo "Usage set_wallpaper [IMG_FILE.png]"
@@ -26,7 +26,7 @@ if test $colors_amount != $generated_amount
 end
 
 # Sets image file as a wallpaper
-feh --bg-fill --no-xinerama "$image_file"
+nitrogen --save --set-zoom-fill "$image_file"
 
 # Creates temporary Xresources file
 set xres_gen /tmp/Xresources_generated

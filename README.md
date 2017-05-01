@@ -27,7 +27,7 @@ You will need:
 * [polybar](https://github.com/jaagr/polybar) - top bar
 * [dunst](http://knopwob.org/dunst/index.html) - notifications daemon
 * [dmenu](http://tools.suckless.org/dmenu/) - dynamic dropdown menu
-* [feh](https://feh.finalrewind.org/) - for setting up the wallpaper
+* [nitrogen](https://wiki.archlinux.org/index.php/nitrogen) - for setting up the wallpaper
 * [colors](http://blog.z3bra.org/2015/06/vomiting-colors.html) - to generate colors palette from wallpaper
 * [fish](https://fishshell.com/) - because some scripts are written in it
 
