@@ -3,10 +3,9 @@ monitor = eDP-1
 width = 100%
 height = 25
 
-background = #00000000
+background = ${module/colors.generated1}
 foreground = ${module/colors.generated7}
 
-line-color = #00000000
 line-size = 3
 
 spacing = 2
@@ -20,7 +19,7 @@ font-3 = FontAwesome:size=10;2
 
 modules-left = i3
 modules-center = date
-modules-right = volume backlight wireless-network wired-network
+modules-right = pacman volume backlight wireless-network wired-network
 
 [module/colors]
 generated1 = ${xrdb:generated1:#000000}
@@ -33,34 +32,22 @@ generated7 = ${xrdb:generated7:#999999}
 generated8 = ${xrdb:generated8:#bbbbbb}
 generated9 = ${xrdb:generated9:#dddddd}
 generated10 = ${xrdb:generated10:#ffffff}
+error = #660000
 
 [module/i3]
 type = internal/i3
 
 pin-workspaces = false
-strip-wsnumbers = true
 index-sort = true
 enable-click = true
 enable-scroll = true
 wrapping-scroll = true
-reverse-scroll = false
-fuzzy-match = false
-
-ws-icon-0 = 1;♚
-ws-icon-1 = 2;♛
-ws-icon-2 = 3;♜
-ws-icon-3 = 4;♝
-ws-icon-4 = 5;♞
-ws-icon-default = ♟
 
 format = <label-state> <label-mode>
 
-label-mode = %mode%
-label-mode-padding = 2
-label-mode-background = #e60053
-
 label-focused = %index%
-label-focused-foreground = ${module/colors.generated7}
+label-focused-foreground = ${module/colors.generated8}
+label-focused-background = ${module/colors.generated2}
 label-focused-underline = ${module/colors.generated6}
 label-focused-padding = 4
 
@@ -68,13 +55,44 @@ label-unfocused = %index%
 label-unfocused-padding = 4
 
 label-visible = %index%
-label-visible-underline = #444444
+label-visible-underline = ${module/colors.generated4}
 label-visible-padding = 4
 
 label-urgent = %index%
 label-urgent-foreground = #000000
 label-urgent-background = #bd2c40
 label-urgent-padding = 4
+
+[module/date]
+type = internal/date
+date = %Y-%m-%d  %H:%M
+date-alt = %A, %d %B %Y  %H:%M:%S
+
+format-foreground = ${module/colors.generated8}
+
+[module/pacman]
+type = custom/script
+interval = 1200
+format = <label>
+format-underline = ${module/colors.error}
+label = "%output:0:30%"
+exec = "~/.config/polybar/pkg"
+exec-if = "ping -q -w 2 -c 1 176.34.135.167 > /dev/null"
+
+[module/volume]
+type = internal/volume
+speaker-mixer = Speaker
+headphone-mixer = Headphone
+headphone-id = 9
+
+format-volume = <ramp-volume> <label-volume>
+label-muted =   muted
+label-muted-foreground = ${module/colors.generated6}
+
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-volume-3 = 
 
 [module/backlight]
 type = internal/xbacklight
@@ -90,17 +108,10 @@ bar-indicator-font = 3
 bar-indicator-foreground = #ff
 bar-fill = ─
 bar-fill-font = 3
-bar-fill-foreground = ${module/colors.generated6}
+bar-fill-foreground = ${module/colors.generated7}
 bar-empty = ─
 bar-empty-font = 3
-bar-empty-foreground = #44
-
-[module/date]
-type = internal/date
-date = %Y-%m-%d %H:%M
-date-alt = %A, %d %B %Y  %H:%M:%S
-
-format-foreground = ${module/colors.generated8}
+bar-empty-foreground = ${module/colors.generated3}
 
 [module/wireless-network]
 type = internal/network
@@ -111,19 +122,16 @@ ping-interval = 10
 format-connected = <ramp-signal> <label-connected>
 label-connected = %essid%
 label-disconnected =    not connected
-label-disconnected-foreground = #660000
+label-disconnected-foreground = ${module/colors.error}
 
-ramp-signal-0 = 
-ramp-signal-1 = 
-ramp-signal-2 = 
-ramp-signal-3 = 
-ramp-signal-4 = 
-
-animation-packetloss-0 = 
-animation-packetloss-0-foreground = #ffa64c
-animation-packetloss-1 = 
-animation-packetloss-1-foreground = ${bar/top.foreground}
-animation-packetloss-framerate = 500
+ramp-signal-0 = ▁
+ramp-signal-1 = ▂
+ramp-signal-2 = ▃
+ramp-signal-3 = ▄
+ramp-signal-4 = ▅
+ramp-signal-5 = ▆
+ramp-signal-6 = ▇
+ramp-signal-7 = █
 
 [module/wired-network]
 type = internal/network
@@ -132,21 +140,4 @@ interval = 3.0
 
 label-connected = VPN
 label-disconnected = VPN
-label-disconnected-foreground = #660000
-
-[module/volume]
-type = internal/volume
-speaker-mixer = Speaker
-headphone-mixer = Headphone
-headphone-id = 9
-
-format-volume = <ramp-volume> <label-volume>
-label-muted =   muted
-label-muted-foreground = #66
-
-ramp-volume-0 = 
-ramp-volume-1 = 
-ramp-volume-2 = 
-ramp-volume-3 = 
-
-; vim:ft=dosini
+label-disconnected-foreground = ${module/colors.error}

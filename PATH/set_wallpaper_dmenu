@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd /home/jezor/Pictures/Wallpapers/
+
+export wallpaper=`ls | grep ".png" | dmenu -l 10 -nb "#000000" -nf "#bbbbbb" -sb "#000000" -sf "#ffffff" -p "Wallpaper" -i`
+
+set_wallpaper "$wallpaper"
