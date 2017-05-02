@@ -37,6 +37,7 @@ You will need:
 Optionally (not seen on preview):
 * [pacman](https://www.archlinux.org/pacman/) - for fetching updates
 * [scrot](https://www.archlinux.org/packages/?name=scrot), [convert](https://www.imagemagick.org/script/convert.php), [i3lock](https://i3wm.org/i3lock/) - for the [lockscreen](http://plankenau.com/blog/post/gaussianlock)
+* [rofi](https://davedavenport.github.io/rofi/) - as dmenu replacement (scripts will work with dmenu as well)
 
 ## Installation
 
@@ -64,8 +65,8 @@ See more details [here](https://wiki.archlinux.org/index.php/Color_output_in_con
 
 ## Known issues
 
-* Top bar cannot be reloaded in-place. The `--reload` option unfortunatelly does
-  the same thing as launch script.
+* Unlike i3, Polybar cannot be reloaded in-place. The `--reload` option unfortunatelly
+  does the same thing as launch script.
 
 If you will find any bugs or if you'd like me to improve something, feel free to
 open a new issue [here](https://github.com/Jezorko/dotfiles/issues/new)!

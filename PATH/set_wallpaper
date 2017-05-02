@@ -17,7 +17,7 @@ set colors_amount 16
 
 # Generates color palette and saves it as array
 if test "$argv[2]"
-    eval "$argv[2]"
+    set generated_palette (eval "$argv[2]")
 else
     set generated_palette (colors -en $colors_amount $image_file)
 end
@@ -43,6 +43,9 @@ for x in (seq $colors_amount)
     echo "*generated$x: $generated_palette[$x]" | xrdb -merge
 end
 
+# Dumps resources to file
+xrdb -edit ~/.Xresources
+
 # Sets fish colors
 fish_set_generated_colors
 
@@ -55,6 +58,18 @@ dunst \
     -nb $GENERATED_PALETTE_1  \
     -lf $GENERATED_PALETTE_7  \
     -lb $GENERATED_PALETTE_1  &
+
+# Generates rofi theme and saves it to Xresources
+echo "rofi.color-enabled: true" | xrdb -merge
+echo "rofi.color-window: $GENERATED_PALETTE_7, $GENERATED_PALETTE_7, $GENERATED_PALETTE_7" | xrdb -merge
+echo "rofi.color-normal: $GENERATED_PALETTE_1, $GENERATED_PALETTE_12, $GENERATED_PALETTE_2, $GENERATED_PALETTE_15, $GENERATED_PALETTE_3" | xrdb -merge
+echo "rofi.color-active: $GENERATED_PALETTE_3, $GENERATED_PALETTE_13, $GENERATED_PALETTE_4, $GENERATED_PALETTE_15, $GENERATED_PALETTE_3" | xrdb -merge
+echo "rofi.color-urgent: $GENERATED_PALETTE_16, $GENERATED_PALETTE_6, $GENERATED_PALETTE_16, $GENERATED_PALETTE_6, $GENERATED_PALETTE_7" | xrdb -merge
+echo "rofi.width: 65" | xrdb -merge
+echo "rofi.font: FontAwesome 12" | xrdb -merge
+echo "rofi.location: 6" | xrdb -merge # middle bottom
+echo "rofi.bw: 0" | xrdb -merge
+echo "rofi.hide-scrollbar: true" | xrdb -merge
 
 # Restarts i3
 i3-msg reload
