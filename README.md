@@ -66,9 +66,8 @@ See more details [here](https://wiki.archlinux.org/index.php/Color_output_in_con
 
 * Top bar cannot be reloaded in-place. The `--reload` option unfortunatelly does
   the same thing as launch script.
-* `.Xresources` file generation will be replaced by `xrdb` setters in the future.
 
-If you'll find any bugs or if you'd like me to improve something, feel free to
+If you will find any bugs or if you'd like me to improve something, feel free to
 open a new issue [here](https://github.com/Jezorko/dotfiles/issues/new)!
 
 ## Pricing
