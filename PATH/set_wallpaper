@@ -16,20 +16,14 @@ set image_file "$argv[1]"
 set colors_amount 16
 
 # Generates color palette and saves it as array
-set generated_palette (colors -en $colors_amount $image_file)
+if test "$argv[2]"
+    eval "$argv[2]"
+else
+    set generated_palette (colors -en $colors_amount $image_file)
+end
 
-# Alternative: generate 32 colors and take 16 from the middle.
-# This approach generates more colorful, but also brighter palettes.
-# It is also a little slower than the previous method.
-#  set generated_palette (colors -en (math "2 * $colors_amount") $image_file | sed '9,24p;d')
-
-# Alternative: generate 32 colors and take every other.
-# This approach generates more toned palettes.
-# It is also as slow as the previous method.
-#  set generated_palette (colors -en (math "2 * $colors_amount") $image_file | awk 'NR%2==1')
-
+# Checks if palette was correctly generated
 set generated_amount (count $generated_palette)
-
 if test $colors_amount != $generated_amount
     notify-send -u critical "Wallpaper changing error" "Not enough colors could be generated\n$image_file"
     exit 1

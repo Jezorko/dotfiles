@@ -6,6 +6,14 @@ cd $wallpapers_dir
 
 export wallpaper=`ls | grep ".png" | dmenu_generated Wallpaper`
 
+# Different methods of theme generation for convenience
+export method=`echo -e 'set generated_palette (colors -en $colors_amount $image_file) # default
+set generated_palette (colors -en 32 $image_file | sed "9,24p;d") # pastel lower contrast
+set generated_palette (colors -en 22 $image_file | sed "4,19p;d") # pastel higher contrast
+set generated_palette (colors -n 32 $image_file | awk "{if (NR<8 || NR>count - 8) {print}}") # pastel brighter
+set generated_palette (colors -en 32 $image_file | awk "NR%2==0") # toned brighter
+set generated_palette (colors -en 32 $image_file | awk "NR%2==1") # toned darker' | dmenu_generated "Setting method"`
+
 if [ "$wallpaper" != "" ]; then
-    set_wallpaper "$wallpaper"
+    set_wallpaper "$wallpaper" "$method"
 fi
