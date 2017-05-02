@@ -4,19 +4,8 @@ export wallpapers_dir="/home/jezor/Pictures/Wallpapers"
 
 cd $wallpapers_dir
 
-export GENERATED_PALETTE_1=`xrdb -query | grep generated1: | grep -oE "#[0-9a-f]+"`
-export GENERATED_PALETTE_5=`xrdb -query | grep generated5: | grep -oE "#[0-9a-f]+"`
-export GENERATED_PALETTE_10=`xrdb -query | grep generated10: | grep -oE "#[0-9a-f]+"`
+export wallpaper=`ls | grep ".png" | dmenu_generated Wallpaper`
 
-export wallpaper=`ls | grep ".png" | dmenu -l 10 \
-          -nb "$GENERATED_PALETTE_1" \
-          -nf "$GENERATED_PALETTE_5" \
-          -sf "$GENERATED_PALETTE_10" \
-          -sb "$GENERATED_PALETTE_1" \
-        -p "Wallpaper" -i`
-
-if [ "$wallpaper" = "" ]; then
-    exit 1
+if [ "$wallpaper" != "" ]; then
+    set_wallpaper "$wallpaper"
 fi
-
-set_wallpaper "$wallpaper"

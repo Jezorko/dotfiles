@@ -166,3 +166,7 @@ bindsym $mod+l exec lock
 # run dmenu
 bindsym $mod+d exec dmenu_runapp
 bindsym $mod+q exec set_wallpaper_dmenu
+
+# VPNs
+bindsym $mod+c exec vpn_upaid
+bindsym $mod+v exec vpn_fenige

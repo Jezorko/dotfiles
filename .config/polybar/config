@@ -4,7 +4,7 @@ width = 100%
 height = 25
 
 background = ${module/colors.generated1}
-foreground = ${module/colors.generated7}
+foreground = ${module/colors.generated10}
 
 line-size = 3
 
@@ -27,11 +27,17 @@ generated2 = ${xrdb:generated2:#111111}
 generated3 = ${xrdb:generated3:#222222}
 generated4 = ${xrdb:generated4:#333333}
 generated5 = ${xrdb:generated5:#444444}
-generated6 = ${xrdb:generated6:#777777}
-generated7 = ${xrdb:generated7:#999999}
-generated8 = ${xrdb:generated8:#bbbbbb}
-generated9 = ${xrdb:generated9:#dddddd}
-generated10 = ${xrdb:generated10:#ffffff}
+generated6 = ${xrdb:generated6:#555555}
+generated7 = ${xrdb:generated7:#666666}
+generated8 = ${xrdb:generated8:#777777}
+generated9 = ${xrdb:generated9:#888888}
+generated10 = ${xrdb:generated10:#999999}
+generated11 = ${xrdb:generated11:#AAAAAA}
+generated12 = ${xrdb:generated12:#BBBBBB}
+generated13 = ${xrdb:generated13:#CCCCCC}
+generated14 = ${xrdb:generated14:#DDDDDD}
+generated15 = ${xrdb:generated15:#EEEEEE}
+generated16 = ${xrdb:generated16:#FFFFFF}
 error = #660000
 
 [module/i3]
@@ -46,16 +52,16 @@ wrapping-scroll = true
 format = <label-state> <label-mode>
 
 label-focused = %index%
-label-focused-foreground = ${module/colors.generated8}
+label-focused-foreground = ${module/colors.generated14}
 label-focused-background = ${module/colors.generated2}
-label-focused-underline = ${module/colors.generated6}
+label-focused-underline = ${module/colors.generated8}
 label-focused-padding = 4
 
 label-unfocused = %index%
 label-unfocused-padding = 4
 
 label-visible = %index%
-label-visible-underline = ${module/colors.generated4}
+label-visible-underline = ${module/colors.generated6}
 label-visible-padding = 4
 
 label-urgent = %index%
@@ -68,7 +74,7 @@ type = internal/date
 date = %Y-%m-%d  %H:%M
 date-alt = %A, %d %B %Y  %H:%M:%S
 
-format-foreground = ${module/colors.generated8}
+format-foreground = ${module/colors.generated12}
 
 [module/pacman]
 type = custom/script
@@ -108,10 +114,10 @@ bar-indicator-font = 3
 bar-indicator-foreground = #ff
 bar-fill = ─
 bar-fill-font = 3
-bar-fill-foreground = ${module/colors.generated7}
+bar-fill-foreground = ${module/colors.generated8}
 bar-empty = ─
 bar-empty-font = 3
-bar-empty-foreground = ${module/colors.generated3}
+bar-empty-foreground = ${module/colors.generated4}
 
 [module/wireless-network]
 type = internal/network

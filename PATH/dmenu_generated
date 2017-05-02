@@ -1,0 +1,15 @@
+#!/bin/bash
+
+export var=$(cat)
+
+export SELECTED_BACKGROUND=`xrdb -query | grep generated2: | grep -oE "#[0-9a-f]+"`
+export SELECTED_FOREGROUND=`xrdb -query | grep generated15: | grep -oE "#[0-9a-f]+"`
+export NORMAL_BACKGROUND=`xrdb -query | grep generated1: | grep -oE "#[0-9a-f]+"`
+export NORMAL_FOREGROUND=`xrdb -query | grep generated10: | grep -oE "#[0-9a-f]+"`
+
+echo "$var" | dmenu -l 10 \
+                   -nb "$NORMAL_BACKGROUND" \
+                   -nf "$NORMAL_FOREGROUND" \
+                   -sf "$SELECTED_FOREGROUND" \
+                   -sb "$SELECTED_BACKGROUND" \
+                   -p "$1" -i

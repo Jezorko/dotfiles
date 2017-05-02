@@ -18,16 +18,16 @@
 function fish_prompt
 	# Username
 
-	printf (set_color -o $GENERATED_PALETTE_8)(whoami | head -c 1)' '
+	printf (set_color -o $GENERATED_PALETTE_13)(whoami | head -c 1)' '
 
 	# Current path
 
-	echo -n (set_color normal)(set_color $GENERATED_PALETTE_7)(prompt_pwd)
+	echo -n (set_color $fish_color_valid_path)(prompt_pwd)
 
 	# GIT status
 
 	set last_status $status
-	set_color -o $GENERATED_PALETTE_6
+	set_color -o $GENERATED_PALETTE_8
 	if __fish_git_prompt
 		printf '\b'
 	else
@@ -36,8 +36,8 @@ function fish_prompt
 
 	# Fancy arrows
 
+	echo -n (set_color -o $GENERATED_PALETTE_8)"$PROMPT_CHAR"
 	echo -n (set_color -o $GENERATED_PALETTE_6)"$PROMPT_CHAR"
-	echo -n (set_color -o $GENERATED_PALETTE_5)"$PROMPT_CHAR"
 	echo -n (set_color -o $GENERATED_PALETTE_4)"$PROMPT_CHAR "
 	set_color normal
 end

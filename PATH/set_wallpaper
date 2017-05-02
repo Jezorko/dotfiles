@@ -13,13 +13,12 @@ end
 set image_file "$argv[1]"
 
 # Colors amount to generate
-set colors_amount 10
+set colors_amount 16
 
 # Generates color palette and saves it as array
 set generated_palette (colors -en $colors_amount $image_file | sed -e 's/ /a\x1eb/g')
 set generated_amount (count $generated_palette)
 
-# If there was an error and colors were not generated
 if test $colors_amount != $generated_amount
     notify-send -u critical "Wallpaper changing error" "Not enough colors could be generated\n$image_file"
     exit 1
@@ -29,7 +28,7 @@ end
 nitrogen --save --set-zoom-fill "$image_file"
 
 # Creates temporary Xresources file
-set xres_gen /tmp/Xresources_generated
+set xres_gen ~/.Xresources
 echo "*background: #ffffff" > $xres_gen
 echo "*foreground: #bbbbbb" >> $xres_gen
 
@@ -44,14 +43,17 @@ for x in (seq $colors_amount)
     echo "*generated$x: "$generated_palette[$x] >> $xres_gen
 end
 
+# Sets fish colors
+fish_set_generated_colors
+
 # Reloads dunst
 killall dunst
 dunst \
     -cf $GENERATED_PALETTE_1  \
-    -cb $GENERATED_PALETTE_10 \
-    -nf $GENERATED_PALETTE_8  \
+    -cb $GENERATED_PALETTE_15 \
+    -nf $GENERATED_PALETTE_10  \
     -nb $GENERATED_PALETTE_1  \
-    -lf $GENERATED_PALETTE_6  \
+    -lf $GENERATED_PALETTE_7  \
     -lb $GENERATED_PALETTE_1  &
 
 # Loads generated Xresources file
@@ -60,4 +62,5 @@ xrdb $xres_gen
 # Restarts i3
 i3-msg reload
 ~/.config/polybar/launch
+
 notify-send "Wallpaper changed" "$image_file"

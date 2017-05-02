@@ -1,0 +1,23 @@
+#!/usr/bin/fish
+
+set fish_color_autosuggestion  (echo $GENERATED_PALETTE_7  | tail -c 7)
+set fish_color_command         (echo $GENERATED_PALETTE_13 | tail -c 7)
+set fish_color_comment         (echo $GENERATED_PALETTE_6  | tail -c 7)
+set fish_color_cwd             (echo $GENERATED_PALETTE_12 | tail -c 7)
+set fish_color_cwd_root        (echo $GENERATED_PALETTE_13 | tail -c 7)
+set fish_color_end             (echo $GENERATED_PALETTE_9 | tail -c 7)
+set fish_color_error           dd1111
+set fish_color_escape          (echo $GENERATED_PALETTE_13 | tail -c 7)
+set fish_color_history_current (echo $GENERATED_PALETTE_13 | tail -c 7)
+set fish_color_host            (echo $GENERATED_PALETTE_10 | tail -c 7)
+set fish_color_match           (echo $GENERATED_PALETTE_14 | tail -c 7)
+set fish_color_normal          (echo $GENERATED_PALETTE_12 | tail -c 7)
+set fish_color_operator        (echo $GENERATED_PALETTE_13 | tail -c 7)
+set fish_color_param           (echo $GENERATED_PALETTE_13 | tail -c 7)
+set fish_color_quote           (echo $GENERATED_PALETTE_14 | tail -c 7)
+set fish_color_redirection     (echo $GENERATED_PALETTE_15 | tail -c 7)
+set fish_color_search_match    (echo $GENERATED_PALETTE_15 | tail -c 7)
+set fish_color_selection       (echo $GENERATED_PALETTE_15 | tail -c 7)
+set fish_color_status          (echo $GENERATED_PALETTE_12 | tail -c 7)
+set fish_color_user            (echo $GENERATED_PALETTE_13 | tail -c 7)
+set fish_color_valid_path      (echo $GENERATED_PALETTE_14 | tail -c 7)
