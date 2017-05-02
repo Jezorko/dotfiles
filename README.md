@@ -39,7 +39,7 @@ Optionally (not seen on preview):
 
 ## Installation
 
-1. Copy all the files from PATH to `/usr/bin` or wherever you have your $PATH defined.
+1. Copy all the files from `PATH` to `/usr/bin` or wherever you have your `$PATH` defined.
 2. If the copied files are not executable, run `chmod +x` on them
 3. Copy configuration from .config to your `~/.config` directory
 4. Personalize all the scripts at will
