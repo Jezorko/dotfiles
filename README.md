@@ -66,7 +66,8 @@ See more details [here](https://wiki.archlinux.org/index.php/Color_output_in_con
 ## Known issues
 
 * Unlike i3, Polybar cannot be reloaded in-place. The `--reload` option unfortunatelly
-  does the same thing as launch script.
+  does the same thing as launch script. I have opened a new issue [here](https://github.com/jaagr/polybar/issues/563), give it a +1 if
+  you like the idea (:
 
 If you will find any bugs or if you'd like me to improve something, feel free to
 open a new issue [here](https://github.com/Jezorko/dotfiles/issues/new)!
