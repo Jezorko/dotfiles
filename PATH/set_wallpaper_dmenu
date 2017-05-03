@@ -14,10 +14,10 @@ fi
 # $image_file is the file colors should be generated from
 # $colors_amount variable can be used to determine how many colors must be generated
 export method=`echo -e 'colors -en $colors_amount $image_file # default
-colors -en 32 $image_file | sed "9,24p;d" # pastel lower contrast
-colors -en 22 $image_file | sed "4,19p;d" # pastel higher contrast
-colors -n 32 $image_file | awk "{if (NR<8 || NR>count - 8) {print}}" # pastel brighter
-colors -en 32 $image_file | awk "NR%2==0" # toned brighter
-colors -en 32 $image_file | awk "NR%2==1" # toned darker' | dmenu_generated "Setting method: "`
+colors -en 32 "$image_file" | sed "9,24p;d" # pastel lower contrast
+colors -en 22 "$image_file" | sed "4,19p;d" # pastel higher contrast
+colors -n 50 "$image_file" | cutl 8 8 # pastel brighter
+colors -en 32 "$image_file" | awk "NR%2==0" # toned brighter
+colors -en 32 "$image_file" | awk "NR%2==1" # toned darker' | dmenu_generated "Setting method: "`
 
 set_wallpaper "$wallpaper" "$method"

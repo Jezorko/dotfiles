@@ -62,7 +62,7 @@ dunst \
 # Generates rofi theme and saves it to Xresources
 echo "rofi.color-enabled: true" | xrdb -merge
 echo "rofi.color-window: $GENERATED_PALETTE_2, $GENERATED_PALETTE_2, $GENERATED_PALETTE_2" | xrdb -merge
-echo "rofi.color-normal: $GENERATED_PALETTE_1, $GENERATED_PALETTE_12, $GENERATED_PALETTE_2, $GENERATED_PALETTE_15, $GENERATED_PALETTE_3" | xrdb -merge
+echo "rofi.color-normal: $GENERATED_PALETTE_2, $GENERATED_PALETTE_12, $GENERATED_PALETTE_2, $GENERATED_PALETTE_15, $GENERATED_PALETTE_3" | xrdb -merge
 echo "rofi.color-active: $GENERATED_PALETTE_3, $GENERATED_PALETTE_13, $GENERATED_PALETTE_4, $GENERATED_PALETTE_15, $GENERATED_PALETTE_3" | xrdb -merge
 echo "rofi.color-urgent: $GENERATED_PALETTE_16, $GENERATED_PALETTE_6, $GENERATED_PALETTE_16, $GENERATED_PALETTE_6, $GENERATED_PALETTE_7" | xrdb -merge
 echo "rofi.padding: 2" | xrdb -merge

@@ -1,0 +1,17 @@
+#!/bin/python3
+
+# Simple Python3 script, because cut doesn't cut lines
+
+import fileinput
+import sys
+
+n = int(sys.argv[1])
+m = int(sys.argv[2])
+
+lines = sys.stdin.readlines()
+
+for line in lines[:n]:
+    print(line, end='', flush=True)
+
+for line in lines[len(lines) - m:]:
+    print(line, end='', flush=True)
