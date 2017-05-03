@@ -4,7 +4,7 @@ export wallpapers_dir="/home/jezor/Pictures/Wallpapers"
 
 cd $wallpapers_dir
 
-export wallpaper=`ls | grep ".png" | dmenu_generated Wallpaper`
+export wallpaper=`ls | grep ".png" | dmenu_generated "Wallpaper: "`
 
 if [ "$wallpaper" = "" ]; then
     exit 1
@@ -18,6 +18,6 @@ colors -en 32 $image_file | sed "9,24p;d" # pastel lower contrast
 colors -en 22 $image_file | sed "4,19p;d" # pastel higher contrast
 colors -n 32 $image_file | awk "{if (NR<8 || NR>count - 8) {print}}" # pastel brighter
 colors -en 32 $image_file | awk "NR%2==0" # toned brighter
-colors -en 32 $image_file | awk "NR%2==1" # toned darker' | dmenu_generated "Setting method"`
+colors -en 32 $image_file | awk "NR%2==1" # toned darker' | dmenu_generated "Setting method: "`
 
 set_wallpaper "$wallpaper" "$method"

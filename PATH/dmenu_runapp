@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export APP_TO_RUN=`find /usr/bin -printf "%f\n" | sort | uniq | dmenu_generated "Run application"`
+export APP_TO_RUN=`find /usr/bin -printf "%f\n" | sort | uniq | dmenu_generated "Run application: "`
 
 if [ "$APP_TO_RUN" != "" ]; then
     notify-send -u low "Running app" "$APP_TO_RUN"
