@@ -2,7 +2,7 @@
         set __fish_git_prompt_showdirtystate 'yes'
         set __fish_git_prompt_showstashstate 'yes'
         set __fish_git_prompt_showupstream 'yes'
-        set __fish_git_prompt_color_branch yellow
+        set __fish_git_prompt_color_branch $GENERATED_PALETTE_7
 
 # GIT prompt status chars
 	set ___fish_git_prompt_char_upstream_equal ''
@@ -16,6 +16,12 @@
 	set PROMPT_CHAR "❯"
 
 function fish_prompt
+  # Shell nesting
+
+  if math "$SHLVL > 2" > /dev/null
+      printf (set_color -o $GENERATED_PALETTE_5)(math "$SHLVL - 2")"| "
+  end
+
 	# Username
 
 	printf (set_color -o $GENERATED_PALETTE_13)(whoami | head -c 1)' '

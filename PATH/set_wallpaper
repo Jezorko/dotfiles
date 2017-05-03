@@ -5,7 +5,7 @@
 #  * nitrogen - https://wiki.archlinux.org/index.php/nitrogen
 
 if not count $argv > /dev/null
-    echo "Usage set_wallpaper [IMG_FILE.png]"
+    echo "Usage $_ [IMG_FILE.png]"
     exit 1
 end
 
