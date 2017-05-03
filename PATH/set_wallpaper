@@ -32,15 +32,23 @@ end
 # Sets image file as a wallpaper
 nitrogen --save --set-zoom-fill "$image_file"
 
+# Transparency factor
+set -l transparency "e1"
+
 for x in (seq $colors_amount)
     # Unsets environment variables
     set -e "GENERATED_PALETTE_$x"
+    set -e "GENERATED_PALETTE_T_$x"
+
+    set -l transparent_generated (echo "$generated_palette[$x]" | cut -c 2- | awk "{print \"#$transparency\"\$1}")
 
     # Saves generated palette to environment variables
     set -Ux "GENERATED_PALETTE_$x" $generated_palette[$x]
+    set -Ux "GENERATED_PALETTE_T_$x" $transparent_generated
 
     # Saves generated palette to Xresources
     echo "*generated$x: $generated_palette[$x]" | xrdb -merge
+    echo "*generated.transparent$x: $transparent_generated" | xrdb -merge
 end
 
 # Dumps resources to file
@@ -61,14 +69,16 @@ dunst \
 
 # Generates rofi theme and saves it to Xresources
 echo "rofi.color-enabled: true" | xrdb -merge
-echo "rofi.color-window: $GENERATED_PALETTE_2, $GENERATED_PALETTE_2, $GENERATED_PALETTE_2" | xrdb -merge
-echo "rofi.color-normal: $GENERATED_PALETTE_2, $GENERATED_PALETTE_12, $GENERATED_PALETTE_2, $GENERATED_PALETTE_15, $GENERATED_PALETTE_3" | xrdb -merge
-echo "rofi.color-active: $GENERATED_PALETTE_3, $GENERATED_PALETTE_13, $GENERATED_PALETTE_4, $GENERATED_PALETTE_15, $GENERATED_PALETTE_3" | xrdb -merge
-echo "rofi.color-urgent: $GENERATED_PALETTE_16, $GENERATED_PALETTE_6, $GENERATED_PALETTE_16, $GENERATED_PALETTE_6, $GENERATED_PALETTE_7" | xrdb -merge
+#                        background              frame
+echo "rofi.color-window: $GENERATED_PALETTE_T_2, #00000000, #00000000" | xrdb -merge
+#                        backgroun1 foreground             backgroun2 selected background      selected foreground
+echo "rofi.color-normal: #00000000, $GENERATED_PALETTE_12, #00000000, $GENERATED_PALETTE_T_13, $GENERATED_PALETTE_3" | xrdb -merge
+echo "rofi.color-active: $GENERATED_PALETTE_T_3, $GENERATED_PALETTE_13, $GENERATED_PALETTE_T_3, $GENERATED_PALETTE_15, $GENERATED_PALETTE_3" | xrdb -merge
+echo "rofi.color-urgent: #88ff0000, $GENERATED_PALETTE_6, #88ff0000, $GENERATED_PALETTE_6, $GENERATED_PALETTE_7" | xrdb -merge
 echo "rofi.padding: 2" | xrdb -merge
-echo "ofi.separator-style: none" | xrdb -merge
+echo "ofi.separator-style: solid" | xrdb -merge
 echo "rofi.width: 65" | xrdb -merge
-echo "rofi.font: FontAwesome 12" | xrdb -merge
+echo "rofi.font: Droid Sans Mono 12" | xrdb -merge
 echo "rofi.location: 6" | xrdb -merge # middle bottom
 echo "rofi.bw: 3" | xrdb -merge
 echo "rofi.hide-scrollbar: true" | xrdb -merge

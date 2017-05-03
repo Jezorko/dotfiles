@@ -3,7 +3,7 @@ monitor = eDP-1
 width = 100%
 height = 25
 
-background = ${module/colors.generated1}
+background = ${module/colors.generated_transparent1}
 foreground = ${module/colors.generated10}
 
 line-size = 3
@@ -38,6 +38,22 @@ generated13 = ${xrdb:generated13:#CCCCCC}
 generated14 = ${xrdb:generated14:#DDDDDD}
 generated15 = ${xrdb:generated15:#EEEEEE}
 generated16 = ${xrdb:generated16:#FFFFFF}
+generated_transparent1 = ${xrdb:generated.transparent1:#E1000000}
+generated_transparent2 = ${xrdb:generated.transparent2:#E1111111}
+generated_transparent3 = ${xrdb:generated.transparent3:#E1222222}
+generated_transparent4 = ${xrdb:generated.transparent4:#E1333333}
+generated_transparent5 = ${xrdb:generated.transparent5:#E1444444}
+generated_transparent6 = ${xrdb:generated.transparent6:#E1555555}
+generated_transparent7 = ${xrdb:generated.transparent7:#E1666666}
+generated_transparent8 = ${xrdb:generated.transparent8:#E1777777}
+generated_transparent9 = ${xrdb:generated.transparent9:#E1888888}
+generated_transparent10 = ${xrdb:generated.transparent10:#E1999999}
+generated_transparent11 = ${xrdb:generated.transparent11:#E1AAAAAA}
+generated_transparent12 = ${xrdb:generated.transparent12:#E1BBBBBB}
+generated_transparent13 = ${xrdb:generated.transparent13:#E1CCCCCC}
+generated_transparent14 = ${xrdb:generated.transparent14:#E1DDDDDD}
+generated_transparent15 = ${xrdb:generated.transparent15:#E1EEEEEE}
+generated_transparent16 = ${xrdb:generated.transparent16:#E1FFFFFF}
 error = #660000
 
 [module/i3]
