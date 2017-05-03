@@ -48,7 +48,7 @@ function screenfetch_custom
     printf (set_color -o $l_c)" ████████  ████████  ████████     "
     printf (set_color -o $h_c)"Terminal: "(set_color -d $n_c)"lxterminal\n"
     printf (set_color -o $l_c)" ████████  ████████  ████████     "
-    printf (set_color -o $h_c)"COLOR_SCHEME: "
+    printf (set_color -o $h_c)"Color scheme: "
     printf (set_color -o $GENERATED_PALETTE_1)"█"
     printf (set_color -o $GENERATED_PALETTE_2)"█"
     printf (set_color -o $GENERATED_PALETTE_3)"█"
