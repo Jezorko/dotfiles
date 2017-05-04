@@ -32,8 +32,6 @@ end
 # Sets image file as a wallpaper
 if test "$argv[3]"
     nitrogen --save "$argv[3]" "$image_file"
-    notify-send "nitrogen --save \"$argv[3]\" \"$image_file\""
-    sleep 2s
 else
     nitrogen --save --set-zoom-fill "$image_file"
 end
