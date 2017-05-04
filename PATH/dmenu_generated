@@ -12,4 +12,4 @@ echo "$var" | dmenu -l 10 \
                    -nf "$NORMAL_FOREGROUND" \
                    -sf "$SELECTED_FOREGROUND" \
                    -sb "$SELECTED_BACKGROUND" \
-                   -p "$1" -i
+                   -p "$1" -i -sync
