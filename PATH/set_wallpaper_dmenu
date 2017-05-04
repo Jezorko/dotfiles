@@ -22,4 +22,11 @@ colors -n 50 "$image_file" | cutl 8 8       # pastel darker
 colors -en 32 "$image_file" | awk "NR%2==0" # toned brighter
 colors -en 32 "$image_file" | awk "NR%2==1" # toned darker' | dmenu_generated "Setting method: "`
 
-set_wallpaper "$wallpaper" "$method"
+export size_setting=`echo -e '--set-auto
+--set-centered
+--set-scaled
+--set-tiled
+--set-zoom
+--set-zoom-fill' | dmenu_generated "Size setting: "`
+
+set_wallpaper "$wallpaper" "$method" "$size_setting"

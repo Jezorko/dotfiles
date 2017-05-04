@@ -5,7 +5,7 @@
 #  * nitrogen - https://wiki.archlinux.org/index.php/nitrogen
 
 if not count $argv > /dev/null
-    echo "Usage $_ [IMG_FILE.png]"
+    echo "Usage $_ [Image file.png] [Colors generator] [Wallpaper size option]"
     exit 1
 end
 
@@ -30,7 +30,13 @@ if test $colors_amount != $generated_amount
 end
 
 # Sets image file as a wallpaper
-nitrogen --save --set-zoom-fill "$image_file"
+if test "$argv[3]"
+    nitrogen --save "$argv[3]" "$image_file"
+    notify-send "nitrogen --save \"$argv[3]\" \"$image_file\""
+    sleep 2s
+else
+    nitrogen --save --set-zoom-fill "$image_file"
+end
 
 # Transparency factor
 set -l transparency "e1"
