@@ -78,4 +78,8 @@ All of code and configuration here is completelly free and you can use it howeve
 
 [Let me know](mailto:jezor@gmail.com) if you'll make something interesting with it!
 
-If you wish, you can [get me a smoothie](https://www.paypal.me/jezor) too :3
+If you wish, you can [get me a smoothie](https://www.paypal.me/jezor) or a coffee:
+
+ <a href='https://ko-fi.com/A0013C6A' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi5.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+
+ c:
