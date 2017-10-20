@@ -89,6 +89,6 @@ echo "rofi.hide-scrollbar: true" | xrdb -merge
 
 # Restarts i3
 i3-msg reload
-~/.config/polybar/launch
+polybar-msg cmd restart
 
 notify-send "Wallpaper changed" "$image_file"

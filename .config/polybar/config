@@ -2,6 +2,7 @@
 monitor = eDP-1
 width = 100%
 height = 25
+enable-ipc = true
 
 background = ${module/colors.generated_transparent1}
 foreground = ${module/colors.generated10}
