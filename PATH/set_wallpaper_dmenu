@@ -13,14 +13,14 @@ fi
 # Different methods of theme generation for convenience
 # $image_file is the file colors should be generated from
 # $colors_amount variable can be used to determine how many colors must be generated
-export method=`echo -e 'colors -en $colors_amount $image_file       # default
-colors -en 32 "$image_file" | sed "9,24p;d" # pastel lower contrast
-colors -en 22 "$image_file" | sed "4,19p;d" # pastel higher contrast
-colors -n 50 "$image_file" | cutl 4 12      # pastel brighter
-colors -n 50 "$image_file" | cutl 6 10      # pastel toned
-colors -n 50 "$image_file" | cutl 8 8       # pastel darker
-colors -en 32 "$image_file" | awk "NR%2==0" # toned brighter
-colors -en 32 "$image_file" | awk "NR%2==1" # toned darker' | dmenu_generated "Setting method: "`
+export method=`echo -e 'colors -en $colors_amount < $image_file       # default
+colors -en 32 < "$image_file" | sed "9,24p;d" # pastel lower contrast
+colors -en 22 < "$image_file" | sed "4,19p;d" # pastel higher contrast
+colors -n 50 < "$image_file" | cutl 4 12      # pastel brighter
+colors -n 50 < "$image_file" | cutl 6 10      # pastel toned
+colors -n 50 < "$image_file" | cutl 8 8       # pastel darker
+colors -en 32 < "$image_file" | awk "NR%2==0" # toned brighter
+colors -en 32 < "$image_file" | awk "NR%2==1" # toned darker' | dmenu_generated "Setting method: "`
 
 export size_setting=`echo -e '--set-auto
 --set-centered

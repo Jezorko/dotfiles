@@ -19,7 +19,7 @@ set colors_amount 16
 if test "$argv[2]"
     set generated_palette (eval "$argv[2]")
 else
-    set generated_palette (colors -en $colors_amount $image_file)
+    set generated_palette (colors -en $colors_amount < $image_file)
 end
 
 # Checks if palette was correctly generated
