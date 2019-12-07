@@ -59,7 +59,7 @@ end
 xrdb -edit ~/.Xresources
 
 # Sets fish colors
-fish_set_generated_colors
+set_generated_colors.fish
 
 # Reloads dunst
 killall dunst
