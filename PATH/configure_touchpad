@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Enables clicking by tapping in the touchpad.
+# This configuration is not persistent and must be added to .profile, otherwise it will reset on startup.
+
+source "$(dirname "$(realpath "${0}")")/utils/logging.bash"
+source "$(dirname "$(realpath "${0}")")/utils/baseutils.bash"
+
+# Check required dependencies.
+dependencyExists 'xinput'
+
+# Fetch ID of touchpad device.
+touchpadId="$(xinput | grep 'Touchpad' | awk '{print $5}' | grep -oE '[0-9]+$')"
+echoInfo "touchpad device ID is ${touchpadId}"
+
+# Fetch the tapping property ID.
+tappingEnabledPropertyId="$(xinput list-props "${touchpadId}" | grep 'libinput Tapping Enabled (' | grep -oE '\([0-9]+\)' | grep -oE '[0-9]+')"
+echoInfo "tapping property ID is ${tappingEnabledPropertyId}, setting to 1"
+xinput set-prop "${touchpadId}" "${tappingEnabledPropertyId}" 1
