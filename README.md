@@ -42,7 +42,8 @@ Optionally (not seen on preview):
 1. Copy all the files from `PATH` to `/usr/bin` or wherever you have your `$PATH` defined.
 2. If the copied files are not executable, run `chmod +x` on them
 3. Copy configuration from .config to your `~/.config` directory
-4. Personalize all the scripts at will
+4. Add pre-generated resources to your `.Xresources` file: `cat .Xresources | xrdb -merge; xrdb -edit ~/.Xresources`
+5. Personalize all the scripts at will
 
 ## Bash support
 
