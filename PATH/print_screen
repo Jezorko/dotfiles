@@ -1,8 +1,31 @@
 #!/bin/bash
+# Simple script to take a screenshot.
 
-export S_PATH=`date +"%d_%m_%y__%H_%M_%S__%N.png"`
-export S_PATH="~/Pictures/Screenshots/"$S_PATH
+source "$(dirname "$(realpath "${0}")")/utils/logging.bash"
+source "$(dirname "$(realpath "${0}")")/utils/baseutils.bash"
 
-scrot -e 'mv $f '$S_PATH
+# Check required dependencies.
+dependencyExists 'scrot'
 
-notify-send "Screenshot has been saved as $S_PATH"
+# Check if screenshots directory exists.
+# If not, try to create it.
+# This variable may be set externally.
+SCREENSHOTS_DIRECTORY="${SCREENSHOTS_DIRECTORY:=~/Pictures/Screenshots}"
+
+if [[ ! -d "${SCREENSHOTS_DIRECTORY}" ]]; then
+  echoInfo "Screenshots directory ${SCREENSHOTS_DIRECTORY} does not exist, trying to create"
+  mkdir --parents "${SCREENSHOTS_DIRECTORY}" || { echoError "failed to create screenshots directory ${SCREENSHOTS_DIRECTORY}"; exit 1; }
+fi
+
+# Take a screenshot
+tempPath="$(scrot -e 'echo $f')"
+
+# Move screenshot to screenshots directory
+screenshotFileName="$(date +'%Y-%m-%d %H-%M-%S.png')"
+screenshotFilePath="${SCREENSHOTS_DIRECTORY}/${screenshotFileName}"
+
+echoInfo "moving screenshot from ${tempPath} to ${screenshotFilePath}"
+mv "${tempPath}" "${screenshotFilePath}" || { echoError "failed to move screenshot file"; exit 1; }
+
+# Notify user that screenshot has been saved correctly.
+notify-send "Screenshot has been saved as ${screenshotFilePath}"
