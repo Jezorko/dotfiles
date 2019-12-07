@@ -1,5 +1,36 @@
 #!/bin/bash
+# Pretty lock with Gaussian Blur effect.
+# Stolen from http://plankenau.com/blog/post/gaussianlock
 
-scrot /tmp/screenshot.png
-convert /tmp/screenshot.png -blur 0x5 /tmp/screenshotblur.png
-i3lock -i /tmp/screenshotblur.png
+source "$(dirname "$(realpath "${0}")")/utils/logging.bash"
+source "$(dirname "$(realpath "${0}")")/utils/baseutils.bash"
+
+# Check required dependencies.
+dependencyExists 'scrot'
+dependencyExists 'convert'
+dependencyExists 'i3lock'
+
+# Temporary files to store the lock screen image.
+currentTimestamp="$(date +%s)"
+lockScreenImage="/tmp/lock-screen-${currentTimestamp}.png"
+lockScreenImageBlur="/tmp/lock-screen-blur-${currentTimestamp}.png"
+
+# Take a screenshot and save it to temporary file.
+echoInfo "saving screenshot to ${lockScreenImage}"
+scrot "${lockScreenImage}"
+
+# Blur the screenshot and save it to another temporary file.
+echoInfo "blurring ${lockScreenImage} and saving as ${lockScreenImageBlur}"
+convert "${lockScreenImage}" -blur 0x5 "${lockScreenImageBlur}"
+
+# Remove unblurred screenshot file.
+echoInfo "removing ${lockScreenImage}"
+rm "${lockScreenImage}"
+
+# Lock the screen.
+echoInfo "locking screen using ${lockScreenImageBlur}"
+i3lock -i "${lockScreenImageBlur}"
+
+# Remove blurred screenshot.
+echoInfo "removing ${lockScreenImageBlur}"
+rm "${lockScreenImageBlur}"
