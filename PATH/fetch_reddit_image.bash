@@ -1,0 +1,319 @@
+#!/usr/bin/env bash
+# Finds image that matches resolution criteria in given subreddits.
+# See 'echoUsage' for the list of possible parameters.
+
+source "$(dirname "$(realpath "${0}")")/utils/logging.bash"
+source "$(dirname "$(realpath "${0}")")/utils/baseutils.bash"
+
+# Constant meta-data about the script.
+APP_NAME='reddit-image-fetcher'
+APP_VERSION='0.2'
+PLATFORM_NAME='$(uname -o)'
+AUTHOR='/u/jezorko'
+LICENSE='wtfpl'
+USER_AGENT_HEADER="User-Agent:${PLATFORM_NAME}:${APP_NAME}:v${APP_VERSION} (by ${AUTHOR})"
+
+# Default parameter values.
+subreddit='EarthPorn'
+currentResolution="$(xdpyinfo  | grep 'dimensions:' | grep -oE '[0-9]+x[0-9]+ pixels' | grep -oE '[0-9]+x[0-9]+')"
+requiredWidth="$(echo "${currentResolution}" | grep -oE '^[0-9]+')"
+requiredHeight="$(echo "${currentResolution}" | grep -oE '[0-9]+$')"
+temporaryHeaderFile="$(mktemp)"
+headerMaxOffset="2000"
+
+# Prints script usage and exists with status 0.
+function echoUsage {
+  ANSI_BOLD='\u001b[1m'
+  ANSI_RESET='\033[0m'
+  echo -en "${ANSI_BOLD}"'Usage'"${ANSI_RESET}"':
+
+  -r | --subreddit [STRING]
+    find images from given subreddit, "'"${subreddit}"'" by default
+
+  -l | --limit [NUMBER]
+    exit if no image matching requirements is found after checking this amount of images, 100 by default
+
+  -w | --width [NUMBER]
+    minimum width of the images, '"${requiredWidth}"' by default
+
+  -h | --height [NUMBER]
+    minimum height of the images, '"${requiredHeight}"' by default
+
+  -s | --strictResolution
+    if this argument is present, match images with exact resolution only
+
+  -m | --matchOrientation
+    if this argument is present, match images with same orientation as screen only
+
+  -o | --header-max-offset [NUMBER]
+    maximum number of bytes to download when checking resolution in image header, '"${headerMaxOffset}"' by default
+    the check success rate increases with the increase of this value, but performance will be affected
+    see https://unix.stackexchange.com/a/96170/179033 for more details
+
+  --help
+    print this message and exit
+'; exit 0
+}
+
+# Check for required dependencies.
+dependencyExists 'curl'
+dependencyExists 'jq'
+dependencyExists 'identify'
+
+# Parse script parameters.
+imagesLimit=100
+strictResolution=false
+matchOrientation=false
+
+POSITIONAL=()
+while [[ $# -gt 0 ]]
+do
+key="$1"
+
+case $key in
+  -r|--subreddit)
+  subreddit="$2"
+  shift # past argument
+  shift # past value
+  ;;
+  -l|--limit)
+  imagesLimit="$2"
+  shift # past argument
+  shift # past value
+  ;;
+  -w|--width)
+  requiredWidth="$2"
+  shift # past argument
+  shift # past value
+  ;;
+  -h|--height)
+  requiredHeight="$2"
+  shift # past argument
+  shift # past value
+  ;;
+  -s|--strictResolution)
+  strictResolution=true
+  shift
+  ;;
+  -m|--matchOrientation)
+  matchOrientation=true
+  shift
+  ;;
+  -o|--header-max-offset)
+  headerMaxOffset="$2"
+  shift # past argument
+  shift # past value
+  ;;
+  --help)
+  echoUsage
+  shift
+  ;;
+  *) # unknown option
+  POSITIONAL+=("$1") # save it in an array for later
+  shift # past argument
+  ;;
+esac
+done
+set -- "${POSITIONAL[@]}" # restore positional parameters
+
+# Validate script parameters.
+requireMatch 'subreddit name' "${subreddit}" '^[A-Za-z]+$'
+requireMatch 'limit' "${imagesLimit}" '^[1-9][0-9]*$'
+requireMatch 'width' "${requiredWidth}" '^[1-9][0-9]*$'
+requireMatch 'height' "${requiredHeight}" '^[1-9][0-9]*$'
+requireMatch 'strict flag' "${strictResolution}" '^(true)|(false)$'
+requireMatch 'orientation flag' "${matchOrientation}" '^(true)|(false)$'
+requireMatch 'header max offset' "${headerMaxOffset}" '^[1-9][0-9]*$'
+
+# Starting to fetch image URL.
+echoInfo "fetching image from subreddit ${subreddit} (up to ${imagesLimit})"
+echoInfo "required resolution: ${requiredWidth}x${requiredHeight} (strict=${strictResolution})"
+
+# Fetches posts from the TOP of given subreddit.
+# Parameters:
+#  ${1} - previous post ID (for pagination)
+function fetchSubredditData {
+  after="${1}"
+  afterUrlPart=''
+  if [[ "${after}" == 'null' ]]; then
+    echoError 'malformed post ID, pagination failed'
+    exit 1
+  elif [[ "${after}" != '' ]]; then
+    afterUrlPart="?after=${after}"
+  fi
+  url="https://www.reddit.com/r/${subreddit}/top.json${afterUrlPart}"
+  echoInfo "fetching data from '${url}'"
+  curl -sXGET -H "${USER_AGENT_HEADER}" "${url}"
+}
+
+# Parses post's title to extract the resolution of the image.
+# Thanks to the rules of some subreddits, we don't need to fetch the image to know the resolution.
+# Paramters:
+#  ${1} - the full title of the post
+# Returns:
+#  parsed width and height of the image, separated by the lowercase letter 'x'
+function titleToResolution {
+  title="${1}"
+  resolutionString="$(echo "${title}" | grep -oE '[0-9]{3,}\W?[Xx×]\W?[0-9]{3,}')"
+  width="$(echo "${resolutionString}" | grep -oE '^[0-9]+')"
+  height="$(echo "${resolutionString}" | grep -oE '[0-9]+$')"
+  echo "${width}x${height}"
+}
+
+# Downloads image and parses its header to extract the resolution of the image.
+# This is done as a secondary check after fetching resolution from the post title.
+#  ${1} - image URL
+# Returns:
+#  parsed width and height of the image, separated by the lowercase letter 'x'
+function headerToResolution {
+  url="${1}"
+  curl -so "${temporaryHeaderFile}" "-r0-${headerMaxOffset}" "${url}"
+  resolution="$(identify "${temporaryHeaderFile}" | awk '{print $3}')"
+  echo "${resolution}"
+}
+
+# Verifies that the resolution of given image is properly set in the title.
+# Parameters:
+#  ${1} - the full title of the post
+#  ${2} - image URL
+# Returns:
+#  'true' if resolution from the title matches the actual resolution of the image
+function resolutionValid {
+  title="${1}"
+  url="${2}"
+  echoInfo "validating resolution of ${title}"
+  titleResolution="$(titleToResolution "${title}")"
+  headerResolution="$(headerToResolution "${url}")"
+  if [[ "${titleResolution}" != "${headerResolution}" ]]; then
+    echoError "resolution from title '${titleResolution}' does not match resolution from header '${headerResolution}'"
+    echo 'false'
+  else
+    echo 'true'
+  fi
+}
+
+# Parameters:
+#  ${1} - resolution in format ${width}x${height}
+# Returns:
+#  ${width} part of given resolution
+function getWidthOf {
+  resolution="${1}"
+  echo "${resolution}" | grep -oE '^[0-9]+'
+}
+
+# Parameters:
+#  ${1} - resolution in format ${width}x${height}
+# Returns:
+#  ${height} part of given resolution
+function getHeightOf {
+  resolution="${1}"
+  echo "${resolution}" | grep -oE '[0-9]+$'
+}
+
+# Image fetching logic.
+imagesChecked=0
+export nextAfter
+foundMatchingImage=false
+while [[ "${foundMatchingImage}" == 'false' ]]; do
+  jsonData="$(fetchSubredditData ${nextAfter})"
+  if [[ "${jsonData}" == '' ]]; then
+    echoError 'failed to receive data from Reddit, exiting'
+    exit 1
+  fi
+  export nextAfter="$(echo "${jsonData}" | jq -r '.data.after')"
+  for post in $(echo "${jsonData}" | jq -r '.data.children[].data | @base64'); do
+    postJson="$(echo ${post} | base64 --decode)"
+
+    title="$(echo "${postJson}" | jq -r '.title')"
+    url="$(echo "${postJson}" | jq -r '.url')"
+    permalink="$(echo "${postJson}" | jq -r '.permalink')"
+
+    resolution="$(titleToResolution "${title}")"
+    width="$(getWidthOf "${resolution}")"
+    height="$(getHeightOf "${resolution}")"
+
+    if [[ "${width}" == '' || "${height}" == '' ]]; then
+      echoWarn "invalid resolution in title: ${width}x${height}"
+      echoInfo "fetching image header of ${title} to find resolution"
+      resolution="$(headerToResolution "${url}")"
+      width="$(getWidthOf "${resolution}")"
+      height="$(getHeightOf "${resolution}")"
+      rm "${temporaryHeaderFile}"
+      if [[ "${width}" == '' || "${height}" == '' ]]; then
+        echoWarn "invalid resolution in header: ${width}x${height}"
+        continue;
+      fi
+    fi
+
+    resolutionMatches=false
+    if [[ "${strictResolution}" == 'true' ]]; then
+      echoInfo "using strict resolution comparison"
+      if [[ "${width}" -eq "${requiredWidth}" ]]; then
+        if [[ "${height}" -eq "${requiredHeight}" ]]; then
+          echoInfo "'${title}' meets strict resolution requirement (${width}x${height}) == (${requiredWidth}x${requiredHeight})"
+          resolutionMatches=true
+        else
+          echoWarn "'${title}' does not meet strict height requirement ${height} == ${requiredHeight}"
+        fi
+      else
+        echoWarn "'${title}' does not meet strict width requirement ${width} == ${requiredWidth}"
+      fi
+    else
+      echoInfo "using non-strict resolution comparison"
+      if [[ "${width}" -ge "${requiredWidth}" ]]; then
+        if [[ "${height}" -ge "${requiredHeight}" ]]; then
+          echoInfo "'${title}' meets resolution requirement (${width}x${height}) >= (${requiredWidth}x${requiredHeight})"
+          resolutionMatches=true
+        else
+          echoWarn "'${title}' does not meet height requirement ${height} >= ${requiredHeight}"
+        fi
+      else
+        echoWarn "'${title}' does not meet width requirement ${width} >= ${requiredWidth}"
+      fi
+    fi
+
+    orientationMatches=false
+    if [[ "${matchOrientation}" == 'true' ]]; then
+      echoInfo "checking image orientation"
+      if [[ "${requiredWidth}" -ge "${requiredHeight}" ]]; then
+        if [[ "${width}" -ge "${height}" ]]; then
+          echoInfo "'${title}' matches orientation requirement"
+          orientationMatches=true
+        else
+          echoWarn "'${title}' does not meet orientation requirement"
+        fi
+      else
+        if [[ "${width}" -le "${height}" ]]; then
+          echoInfo "'${title}' matches orientation requirement"
+          orientationMatches=true
+        else
+          echoWarn "'${title}' does not meet orientation requirement"
+        fi
+      fi
+    else
+      orientationMatches=true
+    fi
+
+    if [[ "${orientationMatches}" == 'true' && "${resolutionMatches}" == 'true' && "$(resolutionValid "${title}" "${url}")" == 'true' ]]; then
+      echoInfo "'${title}' with permalink '${permalink}' meets all requirements, returning"
+      foundMatchingImage=true
+      export matchingImageUrl="${url}"
+      break
+    else
+      echoWarn "'${title}' does not meet one of the requirements"
+    fi
+
+    imagesChecked="$((imagesChecked + 1))"
+    [[ "${imagesChecked}" -ge "${imagesLimit}" ]] && { echoError "checked ${imagesChecked} images, no image matching requirements found"; exit 1; }
+  done
+done
+
+# Workaround if image is from Imgur but has no extension.
+[[ "${matchingImageUrl}" =~ imgur.com/[^.]+$ ]] && {
+  echoInfo "image is from imgur but has no extension, adding .jpg"
+  export matchingImageUrl="${matchingImageUrl}.jpg";
+}
+
+# Successfuly found a matching image, returning URL.
+echoInfo "returning image URL ${matchingImageUrl}"
+echo "${matchingImageUrl}"
