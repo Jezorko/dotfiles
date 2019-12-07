@@ -1,8 +1,54 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-export APP_TO_RUN=`find /usr/bin -printf "%f\n" | sort | uniq | dmenu_generated "Run application: "`
+source "$(dirname "$(realpath "${0}")")/utils/logging.bash"
+source "$(dirname "$(realpath "${0}")")/utils/baseutils.bash"
 
-if [ "$APP_TO_RUN" != "" ]; then
-    notify-send -u low "Running app" "$APP_TO_RUN"
-    $APP_TO_RUN
+# Check for required dependencies.
+dependencyExists 'dmenu_generated'
+dependencyExists 'notify-send'
+
+# Prompts user to select application in the given directory.
+# Parameters:
+#  ${1} - directory to select application from
+function selectApplication() {
+  directory="${1}"
+  applicationsList="$(find "${directory}" -mindepth 1 -maxdepth 1 -perm -111 -printf "%f\n" | sort | uniq)"
+  selectedApplication="$(echo "${applicationsList}" | dmenu_generated 'Run application')"
+  if [[ "${selectedApplication}" != '' ]]; then
+    echo "${directory}/${selectedApplication}"
+  fi
+}
+
+# Runs given application
+# Parameters:
+#  ${1} - path of the application
+function runApplication() {
+  applicationPath="${1}"
+  notify-send -u low "Running application" "$(basename "${applicationPath}")"
+  "${applicationPath}"
+}
+
+# Try running application from frequently used applications if that directory exists.
+frequentlyUsedAppsDirectory="${HOME}/.frequently_used_apps"
+selectedApplication=''
+if [[ -d "${frequentlyUsedAppsDirectory}" ]]; then
+  echoInfo "frequently used apps directory ${frequentlyUsedAppsDirectory} exists, asking for app"
+  selectedApplication="$(selectApplication "${frequentlyUsedAppsDirectory}")"
+else
+  echoWarn "frequently used apps directory ${frequentlyUsedAppsDirectory} does not exist, skipping"
+fi
+
+if [[ "${selectedApplication}" != '' ]]; then
+  echoInfo "running aapplication ${selectedApplication} from ${frequentlyUsedAppsDirectory}"
+  runApplication "${selectedApplication}"
+
+# If there's no directory for frequently used applications, run one from /usr/bin.
+else
+  allAppsDirectory='/usr/bin'
+  echoInfo "selecting application from ${allAppsDirectory}"
+  selectedApplication="$(selectApplication "${allAppsDirectory}")"
+  if [[ "${selectedApplication}" != '' ]]; then
+    echoInfo "running application ${selectedApplication} from ${allAppsDirectory}"
+    runApplication "${selectedApplication}"
+  fi
 fi
