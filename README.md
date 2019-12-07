@@ -17,7 +17,6 @@ Click on the screenshot below to see the gif.
 
 [![Click to play the gif (:)](http://i.imgur.com/wjIStfy.png)](http://i.imgur.com/7vHia2c.gif)
 
-[![screenshot1](http://i.imgur.com/fHdx0Hlb.jpg)](http://i.imgur.com/fHdx0Hl.png)
 [![screenshot2](http://i.imgur.com/6TaMLUmb.jpg)](http://i.imgur.com/6TaMLUm.png)
 [![screenshot3](http://i.imgur.com/ph3EKOsb.jpg)](http://i.imgur.com/ph3EKOs.png)
 [![screenshot4](http://i.imgur.com/43KdsFIb.jpg)](http://i.imgur.com/43KdsFI.png)
