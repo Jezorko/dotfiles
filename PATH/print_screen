@@ -10,7 +10,7 @@ dependencyExists 'scrot'
 # Check if screenshots directory exists.
 # If not, try to create it.
 # This variable may be set externally.
-SCREENSHOTS_DIRECTORY="${SCREENSHOTS_DIRECTORY:=~/Pictures/Screenshots}"
+SCREENSHOTS_DIRECTORY="${SCREENSHOTS_DIRECTORY:=${HOME}/Pictures/Screenshots}"
 
 if [[ ! -d "${SCREENSHOTS_DIRECTORY}" ]]; then
   echoInfo "Screenshots directory ${SCREENSHOTS_DIRECTORY} does not exist, trying to create"
