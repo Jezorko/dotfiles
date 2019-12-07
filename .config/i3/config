@@ -12,6 +12,7 @@ set $screen_left DP1
 set $screen_right eDP1
 set $editor atom
 set $terminal lxterminal
+set $browser google-chrome-stable
 
 # Start polybar
 exec_always --no-startup-id $HOME/.config/polybar/launch
@@ -155,7 +156,7 @@ bindsym $mod+t exec $terminal
 bindsym $mod+j exec "switch-java-version"
 
 # Run browser
-bindsym $mod+w exec chromium
+bindsym $mod+w exec $browser
 
 # Run file manager
 bindsym $mod+f exec thunar
