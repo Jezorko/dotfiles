@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+# Prompts user to switch the current JVM version.
+
+source "$(dirname "$(realpath "${0}")")/utils/logging.bash"
+source "$(dirname "$(realpath "${0}")")/utils/baseutils.bash"
+
+# Check for required dependencies.
+dependencyExists 'java'
+dependencyExists 'dmenu_generated'
+dependencyExists 'notify-send'
+
+# Switch the version of JVM
+echoInfo "switching JVM version"
+
+jvmDirectory='/usr/lib/jvm'
+echoInfo "looking up JVMs in ${jvmDirectory}"
+
+currentJvmPath="$(readlink -f ${jvmDirectory}/default)"
+echoInfo "current JVMs path is ${currentJvmPath}"
+
+currentJvmName="$(basename "${currentJvmPath}")"
+echoInfo "current JVMs name is ${currentJvmName}"
+
+selectedJvmName="$(ls "${jvmDirectory}" \
+                 | grep -oE 'java-[0-9]+-openjdk' \
+                 | grep -v "${currentJvmName}" \
+                 | dmenu_generated "Select JDK (current is ${currentJvmName})")"
+
+if [[ "${selectedJvmName}" != '' ]]; then
+    echoInfo "user selected ${selectedJvmName}"
+else
+    echoInfo 'user canceled action'
+    exit 0
+fi
+
+selectedJvmPath="${jvmDirectory}/${selectedJvmName}"
+echoInfo "switching JVM path from ${currentJvmPath} to ${selectedJvmPath}"
+
+rm "${jvmDirectory}/default" "${jvmDirectory}/default-runtime" || { echoError 'cannot remove symlinks'; exit 1; }
+echoInfo "removed current symlinks"
+
+ln -s "${jvmDirectory}/${selectedJvmName}" "${jvmDirectory}/default" || { echoError 'cannot create default symlink'; exit 1; }
+echoInfo "created default symlink pointing to $(readlink -f ${jvmDirectory}/default)"
+
+ln -s "${jvmDirectory}/${selectedJvmName}" "${jvmDirectory}/default-runtime" || { echoError 'cannot create default-runtime symlink'; exit 1; }
+echoInfo "created default-runtime symlink pointing to $(readlink -f ${jvmDirectory}/default)"
+
+javaVersionInfo="$(2>&1 java -version)"
+echoInfo "current Java version: ${javaVersionInfo}"
+
+notify-send 'Java version switched' "Using ${selectedJvmName}"
