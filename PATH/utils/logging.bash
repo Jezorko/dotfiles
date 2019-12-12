@@ -5,8 +5,11 @@
 # This variable is meant to be set by the importing script.
 SYSTEM_LOGGER_ENABLED="${SYSTEM_LOGGER_ENABLED:=false}"
 
-# ANSI sequence representing the color (blue) to be used by INFO level logging.
-__ECHO_INFO_ANSI_COLOR='\033[0;34m'
+# ANSI sequence representing the color (green) to be used by SUCCESS level logging.
+__ECHO_SUCCESS_ANSI_COLOR='\033[0;32m'
+
+# ANSI sequence representing the color (teal) to be used by INFO level logging.
+__ECHO_INFO_ANSI_COLOR='\033[0;36m'
 
 # ANSI sequence representing the color (yellow) to be used by WARN level logging.
 __ECHO_WARN_ANSI_COLOR='\033[1;33m'
@@ -39,17 +42,22 @@ function __echoColor {
   fi
 }
 
+# Prints given message with SUCCESS log level using echoColor function.
+# Parameters:
+#  ${@} - multiline log message
+function echoSuccess  { __echoColor "${__ECHO_SUCCESS_ANSI_COLOR}"  '[SUCCESS] ' $@; }
+
 # Prints given message with INFO log level using echoColor function.
 # Parameters:
 #  ${@} - multiline log message
-function echoInfo  { __echoColor "${__ECHO_INFO_ANSI_COLOR}"  '[INFO ] ' $@; }
+function echoInfo     { __echoColor "${__ECHO_INFO_ANSI_COLOR}"     '[INFO   ] ' $@; }
 
 # Prints given message with WARN log level using echoColor function.
 # Parameters:
 #  ${@} - multiline log message
-function echoWarn  { __echoColor "${__ECHO_WARN_ANSI_COLOR}"  '[WARN ] ' $@; }
+function echoWarn     { __echoColor "${__ECHO_WARN_ANSI_COLOR}"     '[WARN   ] ' $@; }
 
 # Prints given message with ERROR log level using echoColor function.
 # Parameters:
 #  ${@} - multiline log message
-function echoError { __echoColor "${__ECHO_ERROR_ANSI_COLOR}" '[ERROR] ' $@; }
+function echoError    { __echoColor "${__ECHO_ERROR_ANSI_COLOR}"    '[ERROR  ] ' $@; }
