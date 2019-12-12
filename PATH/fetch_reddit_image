@@ -315,5 +315,5 @@ done
 }
 
 # Successfuly found a matching image, returning URL.
-echoInfo "returning image URL ${matchingImageUrl}"
+echoSuccess "returning image URL ${matchingImageUrl}"
 echo "${matchingImageUrl}"
