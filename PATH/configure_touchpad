@@ -16,3 +16,8 @@ echoInfo "touchpad device ID is ${touchpadId}"
 tappingEnabledPropertyId="$(xinput list-props "${touchpadId}" | grep 'libinput Tapping Enabled (' | grep -oE '\([0-9]+\)' | grep -oE '[0-9]+')"
 echoInfo "tapping property ID is ${tappingEnabledPropertyId}, setting to 1"
 xinput set-prop "${touchpadId}" "${tappingEnabledPropertyId}" 1
+
+# Restart touchpad in case it got stuck
+# see https://askubuntu.com/q/528293
+xinput disable "${touchpadId}"
+xinput enable "${touchpadId}"
