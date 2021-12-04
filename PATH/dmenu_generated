@@ -1,15 +1,110 @@
 #!/bin/bash
 
-export var=$(cat)
+var="$(cat)"
 
-export SELECTED_BACKGROUND=`xrdb -query | grep generated2: | grep -oE "#[0-9a-f]+"`
-export SELECTED_FOREGROUND=`xrdb -query | grep generated15: | grep -oE "#[0-9a-f]+"`
-export NORMAL_BACKGROUND=`xrdb -query | grep generated1: | grep -oE "#[0-9a-f]+"`
-export NORMAL_FOREGROUND=`xrdb -query | grep generated10: | grep -oE "#[0-9a-f]+"`
+function getColor() {
+  colorNumber="${1}"
+  xrdb -query | grep "generated${colorNumber}:" | grep -oE "#[0-9a-f]+"
+}
 
-echo "$var" | dmenu -l 10 \
-                   -nb "$NORMAL_BACKGROUND" \
-                   -nf "$NORMAL_FOREGROUND" \
-                   -sf "$SELECTED_FOREGROUND" \
-                   -sb "$SELECTED_BACKGROUND" \
-                   -p "$1" -i -sync
+ROFI_THEMES_DIRECTORY="${HOME}/.local/share/rofi/themes"
+if [ ! -d "${ROFI_THEMES_DIRECTORY}" ]; then
+  echo "creating directory ${ROFI_THEMES_DIRECTORY}"
+  mkdir --parents "${ROFI_THEMES_DIRECTORY}"
+fi
+
+ROFI_THEME_FILE_NAME="${ROFI_THEMES_DIRECTORY}/rofi-theme-generated"
+ROFI_THEME_FILE="${ROFI_THEME_FILE_NAME}.rasi"
+ROFI_THEME="""
+* {
+    background:                  $(getColor 1);
+    active-background:           $(getColor 9);
+    foreground:                  $(getColor 10);
+    active-foreground:           $(getColor 2);
+    text-color:                  @foreground;
+    background-color:            @background;
+    border-color:                $(getColor 5);
+}
+window {
+    background-color: @background;
+    border:           2;
+    padding:          5;
+    location: south;
+    width: 75%;
+    height: 25%;
+    x-offset: 0 px;
+    y-offset: 0 px;
+}
+mainbox {
+    border:  0;
+    padding: 0;
+}
+message {
+    border:       2px dash 0px 0px ;
+    border-color: @separatorcolor;
+    padding:      1px ;
+}
+textbox {
+    text-color: @foreground;
+}
+listview {
+    fixed-height: 0;
+    border:       2px dash 0px 0px ;
+    border-color: @separatorcolor;
+    spacing:      2px ;
+    scrollbar:    true;
+    padding:      2px 0px 0px ;
+}
+element {
+    border:  0 ;
+    padding: 1px ;
+}
+element selected {
+    background-color: @active-background;
+    text-color:       @active-foreground;
+}
+scrollbar {
+    width:        4px ;
+    border:       0;
+    handle-color: @active-foreground;
+    handle-width: 8px ;
+    padding:      0;
+}
+sidebar {
+    border:       2px dash 0px 0px ;
+    border-color: @separatorcolor;
+}
+button selected {
+    background-color: @active-background;
+    text-color:       @active-foreground;
+}
+inputbar {
+    spacing:    0px ;
+    text-color: @foreground;
+    padding:    1px ;
+    children:   [ prompt,textbox-prompt-colon,entry,case-indicator ];
+}
+case-indicator {
+    spacing:    0;
+    text-color: @foreground;
+}
+entry {
+    spacing:    0;
+    text-color: @foreground;
+}
+prompt {
+    spacing:    0;
+    text-color: @foreground;
+}
+textbox-prompt-colon {
+    expand:     false;
+    str:        \":\";
+    margin:     0px 0.3000em 0.0000em 0.0000em ;
+    text-color: inherit;
+}
+"""
+echo "${ROFI_THEME}" > "${ROFI_THEME_FILE}"
+
+echo "${var}" | rofi -dmenu -lines 10 \
+                     -theme "${ROFI_THEME_FILE_NAME}" \
+                     -p "${1}" -i
