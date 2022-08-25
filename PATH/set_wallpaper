@@ -3,7 +3,7 @@
 # Dependencies list:
 #  * colors-git - https://aur.archlinux.org/packages/colors-git/ and http://blog.z3bra.org/2015/06/vomiting-colors.html
 #  * nitrogen - https://wiki.archlinux.org/index.php/nitrogen
-
+1;9u
 if not count $argv > /dev/null
     echo "Usage $_ [Image file.png] [Colors generator] [Wallpaper size option]"
     exit 1
@@ -80,7 +80,7 @@ echo "rofi.color-normal: #00000000, $GENERATED_PALETTE_12, #00000000, $GENERATED
 echo "rofi.color-active: $GENERATED_PALETTE_T_3, $GENERATED_PALETTE_13, $GENERATED_PALETTE_T_3, $GENERATED_PALETTE_15, $GENERATED_PALETTE_3" | xrdb -merge
 echo "rofi.color-urgent: #88ff0000, $GENERATED_PALETTE_6, #88ff0000, $GENERATED_PALETTE_6, $GENERATED_PALETTE_7" | xrdb -merge
 echo "rofi.padding: 2" | xrdb -merge
-echo "ofi.separator-style: solid" | xrdb -merge
+echo "rofi.separator-style: solid" | xrdb -merge
 echo "rofi.width: 65" | xrdb -merge
 echo "rofi.font: Droid Sans Mono 12" | xrdb -merge
 echo "rofi.location: 6" | xrdb -merge # middle bottom
