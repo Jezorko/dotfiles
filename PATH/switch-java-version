@@ -22,7 +22,7 @@ currentJvmName="$(basename "${currentJvmPath}")"
 echoInfo "current JVMs name is ${currentJvmName}"
 
 selectedJvmName="$(ls "${jvmDirectory}" \
-                 | grep -oE 'java-[0-9]+-openjdk' \
+                 | grep -oE 'java-[0-9]+-(ea-)?openjdk' \
                  | grep -v "${currentJvmName}" \
                  | dmenu_generated "Select JDK (current is ${currentJvmName})")"
 
