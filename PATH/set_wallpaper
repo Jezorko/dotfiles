@@ -81,6 +81,7 @@ echo "rofi.color-active: $GENERATED_PALETTE_T_3, $GENERATED_PALETTE_13, $GENERAT
 echo "rofi.color-urgent: #88ff0000, $GENERATED_PALETTE_6, #88ff0000, $GENERATED_PALETTE_6, $GENERATED_PALETTE_7" | xrdb -merge
 echo "rofi.padding: 2" | xrdb -merge
 echo "rofi.separator-style: solid" | xrdb -merge
+echo "rofi.separatorcolor: $GENERATED_PALETTE_2" | xrdb -merge
 echo "rofi.width: 65" | xrdb -merge
 echo "rofi.font: Droid Sans Mono 12" | xrdb -merge
 echo "rofi.location: 6" | xrdb -merge # middle bottom

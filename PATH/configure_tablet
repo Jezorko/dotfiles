@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+padName='Wacom Intuos BT S Pad pad'
+stylusName='Wacom Intuos BT S Pen stylus'
+
+# Pad
+
+# CTRL+Z on first key
+xsetwacom set "${padName}" Button 1 'KEY  CTRL z'
+# CTRL+Y on second key
+xsetwacom set "${padName}" Button 2 'KEY  SUPER y'
+# Zoom out on third key
+xsetwacom set "${padName}" Button 3 'KEY  CTRL -'
+# Zoom in on fourth key
+xsetwacom set "${padName}" Button 8 'KEY  CTRL +'
+
+# Pen
+
+# Set pen mode to relative (not 1:1 the screen)
+xsetwacom set "${stylusName}" Mode Relative
+# Set sensitivity to 50%
+xsetwacom set "${stylusName}" Area 0 0 30400 19000
+# Change pressure curve
+xsetwacom set "${stylusName}" PressureCurve 0 0 95 100
+# React to stylus when it's further away
+xsetwacom set "${stylusName}" CursorProximity 60

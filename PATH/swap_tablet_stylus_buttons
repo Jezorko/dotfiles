@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+stylusName='Wacom Intuos BT S Pen stylus'
+
+firstButtonBinding="$(xsetwacom get "${stylusName}" Button 1)"
+thirdButtonBinding="$(xsetwacom get "${stylusName}" Button 3)"
+
+xsetwacom set "${stylusName}" Button 1 "${thirdButtonBinding}"
+xsetwacom set "${stylusName}" Button 3 "${firstButtonBinding}"
