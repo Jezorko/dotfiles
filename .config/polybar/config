@@ -18,7 +18,7 @@ font-1 = Symbola:size=13;2
 
 modules-left = i3
 modules-center = date
-modules-right = pacman volume backlight battery wireless-network wired-network
+modules-right = pacman volume backlight battery wireless-network wired-network wifi-block
 
 [module/colors]
 generated1 = ${xrdb:generated1:#000000}
@@ -171,6 +171,14 @@ interval = 3.0
 label-connected = VPN
 label-disconnected = VPN
 label-disconnected-foreground = ${module/colors.error}
+
+[module/wifi-block]
+type = custom/script
+interval = 5
+format = <label>
+format-underline = ${module/colors.error}
+label = "%output%"
+exec = "~/.config/polybar/wifi_blocked"
 
 [module/battery]
 type = internal/battery
