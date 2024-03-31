@@ -9,7 +9,7 @@ dependencyExists 'dmenu_generated'
 
 # Directory where wallpapers are stored.
 # May be set up externally in .profile or similar file.
-WALLPAPERS_DIRECTORY="${WALLPAPERS_DIRECTORY:=${HOME}/Pictures/Wallpapers}"
+WALLPAPERS_DIRECTORY="${WALLPAPERS_DIRECTORY:=${HOME}/Pictures/Wallpapers/}"
 
 if [[ ! -d "${WALLPAPERS_DIRECTORY}" ]]; then
   echoError 'misconfigured wallpapers directory'

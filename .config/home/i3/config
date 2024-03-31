@@ -10,9 +10,14 @@ set $mod Mod4
 # Set additional variables
 set $screen_left DP1
 set $screen_right eDP1
-set $editor atom
+set $editor gedit
 set $terminal kitty
 set $browser google-chrome-stable
+set $filesManager thunar
+set $audioSinkId 1
+
+# Start picom (formerly compton)
+exec_always --no-startup-id picom
 
 # Start polybar
 exec_always --no-startup-id $HOME/.config/polybar/launch
@@ -38,9 +43,6 @@ bindsym $mod+Shift+r restart
 
 # Open this configuration file
 bindsym $mod+s exec "$editor ~/.config/i3/config"
-
-# Test notifications
-bindsym $mod+i exec "notify-send-test"
 
 # Exit i3 (logs you out of your X session)
 bindsym $mod+Escape exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
@@ -160,10 +162,13 @@ bindsym $mod+j exec "switch-java-version"
 bindsym $mod+w exec $browser
 
 # Run file manager
-bindsym $mod+f exec thunar
+bindsym $mod+f exec $filesManager
 
-# print screen
+# Print screen
 bindsym $mod+o exec print_screen
+
+# Change layout of the screen
+bindsym $mod+i exec switch_screen_layout
 
 # lock screen
 bindsym $mod+l exec lock

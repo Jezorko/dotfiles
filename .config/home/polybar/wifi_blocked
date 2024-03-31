@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+softBlockStatus="$(rfkill | grep wlan | awk '{print $4}' | head -n1)"
+
+if [[ "${softBlockStatus}" = "blocked" ]]; then
+	echo "WiFi Soft Blocked, press Fn+F9!"
+else
+	echo ""
+fi

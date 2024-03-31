@@ -1,0 +1,15 @@
+# Necessary
+nitrogen
+rofi
+xfce-polkit
+polybar
+fish
+networkmanager
+arandr
+deadd-notification-center
+
+# Optional
+pavucontrol
+imagemagick
+nomacs
+redshift
