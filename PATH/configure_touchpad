@@ -8,7 +8,7 @@ source "$(dirname "$(realpath "${0}")")/utils/baseutils.bash"
 # Check required dependencies.
 dependencyExists 'xinput'
 
-touchpadDeviceName='Synaptics TM3471-020'
+touchpadDeviceName='ELAN0518:00 04F3:31FC Touchpad'
 echoInfo "configuring touchpad device: ${touchpadDeviceName}"
 
 # Confiugre tapping
