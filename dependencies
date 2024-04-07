@@ -7,9 +7,18 @@ fish
 networkmanager
 arandr
 deadd-notification-center
+xinput
 
 # Optional
 pavucontrol
 imagemagick
 nomacs
 redshift
+catpuccin # theme
+picom # transparency
+gedit # text editor
+thunar # file browser
+lxappearance # theme switching
+
+# Workflow
+darktable # photo editor
