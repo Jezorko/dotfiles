@@ -5,7 +5,7 @@ xrandr \
     --mode 1920x1080 \
     --pos 0x0 \
     --rotate normal \
-    --rate 144 \
+    --rate 165 \
   --output HDMI-1 --off \
   --output DP-1 --off \
   --output DP-2 --off
