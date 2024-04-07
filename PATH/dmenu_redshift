@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+source "$(dirname "$(realpath "${0}")")/utils/baseutils.bash"
+
+# Check for required dependencies.
+dependencyExists 'dmenu_generated'
+
+redshiftEnabled="$(printf 'enabled\ndisabled' | dmenu_generated "Redshift")"
+
+if [[ "${redshiftEnabled}" = 'enabled' ]]; then
+	redshift -x
+	redshift -O 3300
+elif [[ "${redshiftEnabled}" = 'disabled' ]]; then
+	redshift -x
+fi

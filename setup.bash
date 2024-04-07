@@ -26,3 +26,6 @@ echo 'Configuring .profile'
 echo "export PATH=\"\${PATH}:${DOTFILES_DIRECTORY}/PATH\"" >> "${SETUP_DIRECTORY}/.profile"
 echo 'redshift -O 3300 &' >> "${SETUP_DIRECTORY}/.profile"
 echo 'configure_touchpad &' >> "${SETUP_DIRECTORY}/.profile"
+
+echo 'Setting up keyboard layout'
+setxkbmap pl
