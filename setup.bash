@@ -22,11 +22,8 @@ ln -s "${DOTFILES_CONFIGS_DIRECTORY}/screenlayout" "${SETUP_DIRECTORY}/.screenla
 echo 'Copying .Xresources'
 cp "${DOTFILES_DIRECTORY}/.Xresources" "${SETUP_DIRECTORY}/.Xresources"
 
-echo 'Configuring .profile'
-echo "export PATH=\"\${PATH}:${DOTFILES_DIRECTORY}/PATH\"" >> "${SETUP_DIRECTORY}/.profile"
-echo 'redshift -O 3300 &' >> "${SETUP_DIRECTORY}/.profile"
-echo 'configure_touchpad &' >> "${SETUP_DIRECTORY}/.profile"
-echo 'nitrogen --restore &' >> "${SETUP_DIRECTORY}/.profile"
+echo 'Linking .profile'
+ln -s "${DOTFILES_CONFIGS_DIRECTORY}/.profile" "${SETUP_DIRECTORY}/.profile"
 
 echo 'Setting up keyboard layout'
 setxkbmap pl
