@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+source "$(dirname "$(realpath "${0}")")/utils/logging.bash"
+source "$(dirname "$(realpath "${0}")")/utils/baseutils.bash"
+
+# Check for required dependencies.
+dependencyExists 'dmenu_generated'
+dependencyExists 'notify-send'
+
+POWER_OFF='Power Off'
+REBOOT='Reboot'
+LOGOUT='Logout'
+
+choice="$(printf "${POWER_OFF}\n${REBOOT}\n${LOGOUT}" | dmenu_generated)"
+
+if [[ "${choice}" = "${POWER_OFF}" ]]; then
+  poweroff
+elif [[ "${choice}" = "${REBOOT}" ]]; then
+  reboot
+elif [[ "${choice}" = "${LOGOUT}" ]]; then
+  i3-msg exit
+fi
