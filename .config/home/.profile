@@ -18,3 +18,6 @@ configure_touchpad &
 
 # Restore wallpaper
 nitrogen --restore &
+
+# Set keymap
+setxkbmap pl
