@@ -156,7 +156,7 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
 bindsym $mod+t exec $terminal
 
 # Switch Java version
-bindsym $mod+j exec "switch-java-version"
+bindsym $mod+j exec "switch_java_version"
 
 # Run browser
 bindsym $mod+w exec $browser
@@ -172,6 +172,9 @@ bindsym $mod+i exec switch_screen_layout
 
 # lock screen
 bindsym $mod+l exec lock
+
+# Swap tablet stylus buttons
+bindsym $mod+y exec swap_tablet_stylus_buttons
 
 # run dmenu
 bindsym $mod+d exec dmenu_runapp

@@ -8,10 +8,12 @@ export TERM=kitty
 export PATH="${PATH}:/home/jezor/Code/dotfiles/PATH"
 
 # Activate redshift
-redshift -O 3300 &
+# disabled for now
+# redshift -O 3300 &
 
-# Configure touchpad
+# Configure touchpad and tablet
 configure_touchpad &
+configure_tablet &
 
 # Authenticator manager
 /usr/lib/xfce-polkit/xfce-polkit &
@@ -20,4 +22,5 @@ configure_touchpad &
 nitrogen --restore &
 
 # Set keymap
-setxkbmap pl
+setxkbmap pl &
+. "$HOME/.cargo/env"
