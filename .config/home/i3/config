@@ -173,9 +173,6 @@ bindsym $mod+i exec switch_screen_layout
 # lock screen
 bindsym $mod+l exec lock
 
-# Swap tablet stylus buttons
-bindsym $mod+y exec swap_tablet_stylus_buttons
-
 # run dmenu
 bindsym $mod+d exec dmenu_runapp
 bindsym $mod+q exec set_wallpaper_dmenu
