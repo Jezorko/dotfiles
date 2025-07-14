@@ -3,4 +3,6 @@
 SCREEN_LAYOUT_DIRECTORY="${HOME}/.screenlayout"
 selectedScreenLayout="$(find -L "${SCREEN_LAYOUT_DIRECTORY}" -type f -printf "%f\n" | sort | dmenu_generated "Select screen layout")"
 
+killall picom
 "${SCREEN_LAYOUT_DIRECTORY}/${selectedScreenLayout}"
+picom -b

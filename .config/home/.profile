@@ -23,4 +23,3 @@ nitrogen --restore &
 
 # Set keymap
 setxkbmap pl &
-. "$HOME/.cargo/env"

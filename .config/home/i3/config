@@ -8,8 +8,8 @@
 set $mod Mod4
 
 # Set additional variables
-set $screen_left DP1
-set $screen_right eDP1
+set $screen_left HDMI-1-2
+set $screen_right eDP-1
 set $editor gedit
 set $terminal kitty
 set $browser google-chrome-stable

@@ -5,7 +5,4 @@ xrandr \
     --pos 0x0 \
     --rotate normal \
     --rate 165 \
-  --output HDMI-1-0 --off \
-  --output HDMI-1 --off \
-  --output DP-1 --off \
-  --output DP-2 --off
+  --output HDMI-1-0 --off

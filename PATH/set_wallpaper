@@ -1,7 +1,7 @@
 #!/usr/bin/fish
 
 # Dependencies list:
-#  * colors-git - https://aur.archlinux.org/packages/colors-git/ and http://blog.z3bra.org/2015/06/vomiting-colors.html
+#  * colors-git - https://git.2f30.org/colors/log.html
 #  * nitrogen - https://wiki.archlinux.org/index.php/nitrogen
 if not count $argv > /dev/null
     echo "Usage $_ [Image file.png] [Colors generator] [Wallpaper size option]"
